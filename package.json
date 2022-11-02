@@ -4,7 +4,13 @@
   "description": "",
   "main": "src/app.js",
   "scripts": {
-    "test": "jest --coverage --setupFiles dotenv/config -i"
+    "test": "jest --coverage --setupFiles dotenv/config -i",
+    "test:watch": "jest --watchAll --coverage --setupFiles dotenv/config -i",
+    "start": "node src/app.js",
+    "start:dev": "nodemon src/app.js",
+    "generate": "npx prisma generate",
+    "db:migrate:prod": "npx prisma migrate prod",
+    "db:migrate:dev": "npx prisma migrate dev"
   },
   "repository": {
     "type": "git",
