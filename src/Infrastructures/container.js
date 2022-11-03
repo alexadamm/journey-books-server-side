@@ -10,13 +10,13 @@ const UsersRepositoryPostgres = require('./repositories/postgres/UsersRepository
 const pool = require('./database/postgres/pool');
 const UserRegistration = require('../Applications/use_cases/UserRegistrationUseCase');
 const UsersValidator = require('../Applications/validators/UsersValidator');
-const UsersValidatorJoi = require('./validator/users/UsersValidatorJoi');
+const UsersValidatorJoi = require('./validators/users/UsersValidatorJoi');
 const TokenManager = require('../Applications/securities/TokenManager');
 const TokenManagerJwt = require('./securities/TokenManagerJwt');
 const AuthenticationsRepository = require('../Domains/authentications/AuthenticationsRepository');
 const AuthenticationsRepositoryPostgres = require('./repositories/postgres/AuthenticationsRepositoryPostgres');
 const UserLoginUseCase = require('../Applications/use_cases/UserLoginUseCase');
-const AuthenticationsValidatorJoi = require('./validator/authentications/AuthenticationsValidatorJoi');
+const AuthenticationsValidatorJoi = require('./validators/authentications/AuthenticationsValidatorJoi');
 const AuthenticationsValidator = require('../Applications/validators/AuthenticationsValidator');
 
 // creating container
