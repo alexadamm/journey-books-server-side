@@ -4,7 +4,7 @@ const UserLogin = require('../../../Domains/users/entities/UserLogin');
 const UsersRepository = require('../../../Domains/users/UsersRepository');
 const Hasher = require('../../securities/Hasher');
 const TokenManager = require('../../securities/TokenManager');
-const AuthenticationValidator = require('../../../Infrastructures/validator/authentications');
+const AuthenticationsValidator = require('../../validators/AuthenticationsValidator');
 const UserLoginUseCase = require('../UserLoginUseCase');
 
 describe('UserLoginUseCase', () => {
@@ -22,14 +22,14 @@ describe('UserLoginUseCase', () => {
       refreshToken: 'refresh_token',
     });
 
-    const mockAuthenticationValidator = AuthenticationValidator;
+    const mockAuthenticationValidator = new AuthenticationsValidator();
     const mockUsersRepository = new UsersRepository();
     const mockHasher = new Hasher();
     const mockTokenManager = new TokenManager();
     const mockAuthenticationsRepository = new AuthenticationsRepository();
 
     mockAuthenticationValidator.validatePostAuthenticationPayload = jest.fn()
-      .mockImplementation(() => Promise.resolve());
+      .mockImplementation();
     mockUsersRepository.getPasswordByUsername = jest.fn()
       .mockImplementation(() => Promise.resolve(encryptedPassword));
     mockHasher.compare = jest.fn()

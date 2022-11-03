@@ -1,7 +1,7 @@
 const UserDetail = require('../../../Domains/users/entities/UserDetail');
 const NewUser = require('../../../Domains/users/entities/NewUser');
 const UsersRepository = require('../../../Domains/users/UsersRepository');
-const UsersValidator = require('../../../Infrastructures/validator/users');
+const UsersValidator = require('../../validators/UsersValidator');
 const Hasher = require('../../securities/Hasher');
 const UserRegistrationUseCase = require('../UserRegistrationUseCase');
 
@@ -22,12 +22,12 @@ describe('UserRegistrationUseCase', () => {
       username: 'johndoe',
     });
 
-    const mockUsersValidator = UsersValidator;
+    const mockUsersValidator = new UsersValidator();
     const mockUsersRepository = new UsersRepository();
     const mockHasher = new Hasher();
 
     mockUsersValidator.validatePostUserPayload = jest.fn()
-      .mockImplementation(() => Promise.resolve());
+      .mockImplementation();
     mockUsersRepository.verifyAvailableEmail = jest.fn()
       .mockImplementation(() => Promise.resolve());
     mockUsersRepository.verifyAvailableUsername = jest.fn()

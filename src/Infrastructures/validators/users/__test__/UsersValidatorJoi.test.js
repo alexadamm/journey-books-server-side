@@ -1,4 +1,6 @@
-const UsersValidator = require('..');
+const Joi = require('joi');
+
+const UsersValidatorJoi = require('../UsersValidatorJoi');
 const InvariantError = require('../../../../Commons/exceptions/InvariantError');
 
 describe('User requests validator', () => {
@@ -10,8 +12,10 @@ describe('User requests validator', () => {
         fullname: 'abc',
       };
 
+      const usersValidator = new UsersValidatorJoi(Joi);
+
       // Action and Assert
-      expect(() => UsersValidator.validatePostUserPayload(payload))
+      expect(() => usersValidator.validatePostUserPayload(payload))
         .toThrowError(InvariantError);
     });
 
@@ -24,8 +28,10 @@ describe('User requests validator', () => {
         fullname: true,
       };
 
+      const usersValidator = new UsersValidatorJoi(Joi);
+
       /// Action and Assert
-      expect(() => UsersValidator.validatePostUserPayload(payload))
+      expect(() => usersValidator.validatePostUserPayload(payload))
         .toThrowError(InvariantError);
     });
 
@@ -38,8 +44,10 @@ describe('User requests validator', () => {
         fullname: 'abc',
       };
 
+      const usersValidator = new UsersValidatorJoi(Joi);
+
       // Action and Assert
-      expect(() => UsersValidator.validatePostUserPayload(payload))
+      expect(() => usersValidator.validatePostUserPayload(payload))
         .toThrowError(InvariantError);
     });
 
@@ -52,8 +60,10 @@ describe('User requests validator', () => {
         fullname: 'abc',
       };
 
+      const usersValidator = new UsersValidatorJoi(Joi);
+
       // Action and Assert
-      expect(() => UsersValidator.validatePostUserPayload(payload))
+      expect(() => usersValidator.validatePostUserPayload(payload))
         .toThrowError(InvariantError);
     });
 
@@ -66,8 +76,10 @@ describe('User requests validator', () => {
         fullname: 'abc',
       };
 
+      const usersValidator = new UsersValidatorJoi(Joi);
+
       // Action and Assert
-      expect(() => UsersValidator.validatePostUserPayload(payload))
+      expect(() => usersValidator.validatePostUserPayload(payload))
         .toThrowError(InvariantError);
     });
 
@@ -80,8 +92,10 @@ describe('User requests validator', () => {
         fullname: 'John Doe',
       };
 
+      const usersValidator = new UsersValidatorJoi(Joi);
+
       // Action and Assert
-      expect(() => UsersValidator.validatePostUserPayload(payload))
+      expect(() => usersValidator.validatePostUserPayload(payload))
         .not.toThrowError(InvariantError);
     });
   });
@@ -93,8 +107,10 @@ describe('User requests validator', () => {
         userId: 123,
       };
 
+      const usersValidator = new UsersValidatorJoi(Joi);
+
       // Action and Assert
-      expect(() => UsersValidator.validateGetUserByIdParams(params))
+      expect(() => usersValidator.validateGetUserByIdParams(params))
         .toThrowError(InvariantError);
     });
 
@@ -104,8 +120,10 @@ describe('User requests validator', () => {
         userId: '12345678-abcd-abcd-abcd-123456789012',
       };
 
+      const usersValidator = new UsersValidatorJoi(Joi);
+
       // Action and Assert
-      expect(() => UsersValidator.validateGetUserByIdParams(params))
+      expect(() => usersValidator.validateGetUserByIdParams(params))
         .not.toThrowError(InvariantError);
     });
   });

@@ -1,5 +1,7 @@
-const AuthenticationsValidator = require('../index');
+const Joi = require('joi');
+
 const InvariantError = require('../../../../Commons/exceptions/InvariantError');
+const AuthenticationsValidatorJoi = require('../AuthenticationsValidatorJoi');
 
 describe('AuthenticationsValidator', () => {
   describe('post authentication request payload', () => {
@@ -9,8 +11,10 @@ describe('AuthenticationsValidator', () => {
         username: 'johndoe',
       };
 
+      const authenticationsValidator = new AuthenticationsValidatorJoi(Joi);
+
       // Action and Assert
-      expect(() => AuthenticationsValidator.validatePostAuthenticationPayload(payload))
+      expect(() => authenticationsValidator.validatePostAuthenticationPayload(payload))
         .toThrowError(InvariantError);
     });
 
@@ -21,8 +25,10 @@ describe('AuthenticationsValidator', () => {
         password: [],
       };
 
+      const authenticationsValidator = new AuthenticationsValidatorJoi(Joi);
+
       // Action and Assert
-      expect(() => AuthenticationsValidator.validatePostAuthenticationPayload(payload))
+      expect(() => authenticationsValidator.validatePostAuthenticationPayload(payload))
         .toThrowError(InvariantError);
     });
 
@@ -33,8 +39,10 @@ describe('AuthenticationsValidator', () => {
         password: 'secret',
       };
 
+      const authenticationsValidator = new AuthenticationsValidatorJoi(Joi);
+
       // Action and Assert
-      expect(() => AuthenticationsValidator.validatePostAuthenticationPayload(payload))
+      expect(() => authenticationsValidator.validatePostAuthenticationPayload(payload))
         .toThrowError(InvariantError);
     });
 
@@ -45,8 +53,10 @@ describe('AuthenticationsValidator', () => {
         password: 'secret',
       };
 
+      const authenticationsValidator = new AuthenticationsValidatorJoi(Joi);
+
       // Action and Assert
-      expect(() => AuthenticationsValidator.validatePostAuthenticationPayload(payload))
+      expect(() => authenticationsValidator.validatePostAuthenticationPayload(payload))
         .toThrowError(InvariantError);
     });
 
@@ -57,8 +67,10 @@ describe('AuthenticationsValidator', () => {
         password: 'secret',
       };
 
+      const authenticationsValidator = new AuthenticationsValidatorJoi(Joi);
+
       // Action and Assert
-      expect(() => AuthenticationsValidator.validatePostAuthenticationPayload(payload))
+      expect(() => authenticationsValidator.validatePostAuthenticationPayload(payload))
         .not.toThrowError(InvariantError);
     });
   });
@@ -68,8 +80,10 @@ describe('AuthenticationsValidator', () => {
       // Arrange
       const payload = {};
 
+      const authenticationsValidator = new AuthenticationsValidatorJoi(Joi);
+
       // Action and Assert
-      expect(() => AuthenticationsValidator.validateDeleteAuthenticationPayload(payload))
+      expect(() => authenticationsValidator.validateDeleteAuthenticationPayload(payload))
         .toThrowError(InvariantError);
     });
 
@@ -79,8 +93,10 @@ describe('AuthenticationsValidator', () => {
         refreshToken: 123,
       };
 
+      const authenticationsValidator = new AuthenticationsValidatorJoi(Joi);
+
       // Action and Assert
-      expect(() => AuthenticationsValidator.validateDeleteAuthenticationPayload(payload))
+      expect(() => authenticationsValidator.validateDeleteAuthenticationPayload(payload))
         .toThrowError(InvariantError);
     });
 
@@ -90,8 +106,10 @@ describe('AuthenticationsValidator', () => {
         refreshToken: 'refresh_token',
       };
 
+      const authenticationsValidator = new AuthenticationsValidatorJoi(Joi);
+
       // Action and Assert
-      expect(() => AuthenticationsValidator.validateDeleteAuthenticationPayload(payload))
+      expect(() => authenticationsValidator.validateDeleteAuthenticationPayload(payload))
         .not.toThrowError(InvariantError);
     });
   });

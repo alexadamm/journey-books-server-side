@@ -1,6 +1,7 @@
 const { createContainer } = require('instances-container');
 const argon2 = require('argon2');
 const jwt = require('jsonwebtoken');
+const Joi = require('joi');
 
 const Hasher = require('../Applications/securities/Hasher');
 const HasherArgon = require('./securities/HasherArgon');
@@ -8,13 +9,15 @@ const UsersRepository = require('../Domains/users/UsersRepository');
 const UsersRepositoryPostgres = require('./repositories/postgres/UsersRepositoryPostgres');
 const pool = require('./database/postgres/pool');
 const UserRegistration = require('../Applications/use_cases/UserRegistrationUseCase');
-const UsersValidator = require('./validator/users');
+const UsersValidator = require('../Applications/validators/UsersValidator');
+const UsersValidatorJoi = require('./validator/users/UsersValidatorJoi');
 const TokenManager = require('../Applications/securities/TokenManager');
 const TokenManagerJwt = require('./securities/TokenManagerJwt');
 const AuthenticationsRepository = require('../Domains/authentications/AuthenticationsRepository');
 const AuthenticationsRepositoryPostgres = require('./repositories/postgres/AuthenticationsRepositoryPostgres');
 const UserLoginUseCase = require('../Applications/use_cases/UserLoginUseCase');
-const AuthenticationsValidator = require('./validator/authentications');
+const AuthenticationsValidatorJoi = require('./validator/authentications/AuthenticationsValidatorJoi');
+const AuthenticationsValidator = require('../Applications/validators/AuthenticationsValidator');
 
 // creating container
 const container = createContainer();
@@ -39,6 +42,28 @@ container.register([
       dependencies: [
         {
           concrete: jwt,
+        },
+      ],
+    },
+  },
+  {
+    key: UsersValidator.name,
+    Class: UsersValidatorJoi,
+    parameter: {
+      dependencies: [
+        {
+          concrete: Joi,
+        },
+      ],
+    },
+  },
+  {
+    key: AuthenticationsValidator.name,
+    Class: AuthenticationsValidatorJoi,
+    parameter: {
+      dependencies: [
+        {
+          concrete: Joi,
         },
       ],
     },
@@ -77,7 +102,7 @@ container.register([
       dependencies: [
         {
           name: 'usersValidator',
-          concrete: UsersValidator,
+          internal: UsersValidator.name,
         },
         {
           name: 'usersService',
@@ -98,7 +123,7 @@ container.register([
       dependencies: [
         {
           name: 'authenticationsValidator',
-          concrete: AuthenticationsValidator,
+          internal: AuthenticationsValidator.name,
         },
         {
           name: 'usersRepository',
