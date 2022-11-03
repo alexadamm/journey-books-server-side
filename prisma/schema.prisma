@@ -16,3 +16,9 @@ model User {
 
   @@map("users")
 }
+
+model Authentication {
+  token String @unique
+
+  @@map("authentications")
+}

@@ -11,6 +11,10 @@ const UserRegistration = require('../Applications/use_cases/UserRegistrationUseC
 const UsersValidator = require('./validator/users');
 const TokenManager = require('../Applications/securities/TokenManager');
 const TokenManagerJwt = require('./securities/TokenManagerJwt');
+const AuthenticationsRepository = require('../Domains/authentications/AuthenticationsRepository');
+const AuthenticationsRepositoryPostgres = require('./repositories/postgres/AuthenticationsRepositoryPostgres');
+const UserLoginUseCase = require('../Applications/use_cases/UserLoginUseCase');
+const AuthenticationsValidator = require('./validator/authentications');
 
 // creating container
 const container = createContainer();
@@ -50,6 +54,17 @@ container.register([
       ],
     },
   },
+  {
+    key: AuthenticationsRepository.name,
+    Class: AuthenticationsRepositoryPostgres,
+    parameter: {
+      dependencies: [
+        {
+          concrete: pool,
+        },
+      ],
+    },
+  },
 ]);
 
 // registering use cases
@@ -71,6 +86,35 @@ container.register([
         {
           name: 'passwordHasher',
           internal: Hasher.name,
+        },
+      ],
+    },
+  },
+  {
+    key: UserLoginUseCase.name,
+    Class: UserLoginUseCase,
+    parameter: {
+      injectType: 'destructuring',
+      dependencies: [
+        {
+          name: 'authenticationsValidator',
+          concrete: AuthenticationsValidator,
+        },
+        {
+          name: 'usersRepository',
+          internal: UsersRepository.name,
+        },
+        {
+          name: 'passwordHasher',
+          internal: Hasher.name,
+        },
+        {
+          name: 'authenticationTokenManager',
+          internal: TokenManager.name,
+        },
+        {
+          name: 'authenticationsRepository',
+          internal: AuthenticationsRepository.name,
         },
       ],
     },

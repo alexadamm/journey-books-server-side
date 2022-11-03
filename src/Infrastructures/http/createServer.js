@@ -2,6 +2,7 @@ const express = require('express');
 const { default: helmet } = require('helmet');
 
 const users = require('../../Interfaces/http/api/users/routes');
+const authentications = require('../../Interfaces/http/api/authentications/routes');
 
 const ServerMiddlewares = require('./middlewares');
 
@@ -13,6 +14,7 @@ const createServer = async (container) => {
   app.use(express.urlencoded({ extended: true }));
 
   app.use('/users', users(container));
+  app.use('/authentications', authentications(container));
 
   app.use(ServerMiddlewares.unregisteredRouteHandler);
   app.use(ServerMiddlewares.errorHandler);
