@@ -1,0 +1,36 @@
+name: Continuous Integration
+  
+on: 
+  pull_request:
+    branches:
+      - master
+  
+jobs:
+  test:
+    runs-on: ubuntu-latest
+  
+    strategy:
+      matrix:
+        node-version: [14.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+  
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: npm install migrate and test
+      run: |
+        npm install
+        npm run db:migrate:dev
+        npm run test
+      env:
+        CI: true
+        DATABASE_URL: ${{ secrets.DATABASE_URL_TEST }}
+        DATABASE_URL_TEST: ${{ secrets.DATABASE_URL_TEST }}
+        PORT: ${{ secrets.PORT }}
+        SALT: ${{ secrets.SALT }}
+        ACCESS_TOKEN_KEY: ${{ secrets.ACCESS_TOKEN_KEY }}
+        REFRESH_TOKEN_KEY: ${{ secrets.REFRESH_TOKEN_KEY }}
+        ACCESS_TOKEN_AGE: ${{ secrets.ACCESS_TOKEN_AGE }}
