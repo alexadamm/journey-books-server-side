@@ -15,6 +15,12 @@ const createServer = async (container) => {
 
   app.use('/users', users(container));
   app.use('/authentications', authentications(container));
+  app.get('/', async (req, res) => {
+    res.status(200).json({
+      isSuccess: true,
+      message: 'Journey Books API',
+    });
+  });
 
   app.use(ServerMiddlewares.unregisteredRouteHandler);
   app.use(ServerMiddlewares.errorHandler);
