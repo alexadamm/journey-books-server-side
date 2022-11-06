@@ -25,6 +25,15 @@ class AuthenticationsValidatorJoi extends AuthenticationsValidator {
       ValidationErrorHandler(validationResult);
     }
   }
+
+  validatePutAuthenticationPayload(payload) {
+    const validationResult = this.authenticationsSchema.PutAuthenticationSchema
+      .validate(payload, { abortEarly: false });
+
+    if (validationResult.error) {
+      ValidationErrorHandler(validationResult);
+    }
+  }
 }
 
 module.exports = AuthenticationsValidatorJoi;

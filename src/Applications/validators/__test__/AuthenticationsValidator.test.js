@@ -8,5 +8,6 @@ describe('AuthenticationsValidator interface', () => {
     // Action and Assert
     expect(authenticationsValidator.validatePostAuthenticationPayload).toThrowError('AUTHENTICATIONS_VALIDATOR.METHOD_NOT_IMPLEMENTED');
     expect(authenticationsValidator.validateDeleteAuthenticationPayload).toThrowError('AUTHENTICATIONS_VALIDATOR.METHOD_NOT_IMPLEMENTED');
+    expect(authenticationsValidator.validatePutAuthenticationPayload).toThrowError('AUTHENTICATIONS_VALIDATOR.METHOD_NOT_IMPLEMENTED');
   });
 });

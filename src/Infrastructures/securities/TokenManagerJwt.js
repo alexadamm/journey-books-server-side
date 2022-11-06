@@ -35,7 +35,6 @@ class TokenManagerJwt extends TokenManager {
   }
 
   async decodePayload(token) {
-    await this.verifyAccessToken(token);
     const artifacts = this.jwt.decode(token);
     delete artifacts.iat;
     delete artifacts.exp;

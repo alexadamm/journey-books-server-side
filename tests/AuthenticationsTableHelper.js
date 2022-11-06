@@ -10,6 +10,10 @@ const AuthenticationsTableHelper = {
     return pool.Authentication.create({ data: { token } });
   },
 
+  async deleteToken(token) {
+    return pool.Authentication.delete({ where: { token } });
+  },
+
   async cleanTable() {
     await pool.Authentication.deleteMany();
   },

@@ -1,6 +1,7 @@
 const request = require('supertest');
 const AuthenticationsTableHelper = require('../../../../tests/AuthenticationsTableHelper');
 const DatabaseHelper = require('../../../../tests/DatabaseHelper');
+const ServerTestHelper = require('../../../../tests/ServerTestHelper');
 const container = require('../../container');
 const pool = require('../../database/postgres/pool');
 const createServer = require('../createServer');
@@ -54,6 +55,70 @@ describe('/authentications endpoint', () => {
       expect(response.statusCode).toEqual(401);
       expect(response.body.isSuccess).toEqual(false);
       expect(message).toContain('Wrong credentials. Invalid username or password');
+    });
+  });
+
+  describe('when PUT /authentications', () => {
+    it('should response 200 and access token', async () => {
+      // Arrange
+      const app = await createServer(container);
+
+      const { refreshToken } = await ServerTestHelper.newUser({ request, app }, { username: 'johndoe' });
+
+      // Action
+      const response = await request(app).put('/authentications').send({ refreshToken });
+
+      // Assert
+      const { accessToken } = response.body.data;
+      expect(response.statusCode).toEqual(200);
+      expect(response.body.isSuccess).toEqual(true);
+      expect(response.body.message).toEqual('Access token created successfully');
+      expect(accessToken).toBeDefined();
+    });
+
+    it('should response 400 when request payload not contain needed property', async () => {
+      // Arrange
+      const app = await createServer(container);
+
+      // Action
+      const response = await request(app).put('/authentications').send({});
+
+      // Assert
+      const { refreshToken } = response.body.errors;
+      expect(response.statusCode).toEqual(400);
+      expect(response.body.isSuccess).toEqual(false);
+      expect(refreshToken).toContain('"refreshToken" is required');
+    });
+
+    it('should response 400 when request payload not meet data type specification', async () => {
+      // Arrange
+      const app = await createServer(container);
+
+      // Action
+      const response = await request(app).put('/authentications').send({ refreshToken: 123 });
+
+      // Assert
+      const { refreshToken } = response.body.errors;
+      expect(response.statusCode).toEqual(400);
+      expect(response.body.isSuccess).toEqual(false);
+      expect(refreshToken).toContain('"refreshToken" must be a string');
+    });
+
+    it('should response 400 when refresh token not found', async () => {
+      // Arrange
+      const app = await createServer(container);
+
+      const { refreshToken: token } = await ServerTestHelper.newUser({ request, app }, { username: 'johndoe' });
+      await AuthenticationsTableHelper.deleteToken(token);
+
+      // Action
+      const response = await request(app).put('/authentications').send({ refreshToken: token });
+
+      // Assert
+      const { refreshToken } = response.body.errors;
+      expect(response.statusCode).toEqual(400);
+      expect(response.body.isSuccess).toEqual(false);
+      expect(refreshToken).toContain('Invalid token');
     });
   });
 });

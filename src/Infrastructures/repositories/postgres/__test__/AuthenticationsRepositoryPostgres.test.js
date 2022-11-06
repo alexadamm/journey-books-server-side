@@ -1,5 +1,5 @@
 const AuthenticationsTableHelper = require('../../../../../tests/AuthenticationsTableHelper');
-const NotFoundError = require('../../../../Commons/exceptions/NotFoundError');
+const InvariantError = require('../../../../Commons/exceptions/InvariantError');
 const pool = require('../../../database/postgres/pool');
 const AuthenticationsRepositoryPostgres = require('../AuthenticationsRepositoryPostgres');
 
@@ -27,17 +27,17 @@ describe('AuthenticationsRepositoryPostgres', () => {
   });
 
   describe('checkTokenAvailability method', () => {
-    it('should throw NotFoundError when token is not found', async () => {
+    it('should throw InvariantError when token is not found', async () => {
       // Arrange
       const expectedToken = 'refreshToken';
       const authenticationsRepository = new AuthenticationsRepositoryPostgres(pool);
 
       // Action and Assert
       await expect(authenticationsRepository.checkTokenAvailability(expectedToken))
-        .rejects.toThrowError(NotFoundError);
+        .rejects.toThrowError(InvariantError);
     });
 
-    it('should not throw NotFoundError when token is found', async () => {
+    it('should not throw InvariantError when token is found', async () => {
       // Arrange
       const expectedToken = 'refreshToken';
       await AuthenticationsTableHelper.addToken(expectedToken);
@@ -45,7 +45,7 @@ describe('AuthenticationsRepositoryPostgres', () => {
 
       // Action and Assert
       await expect(authenticationsRepository.checkTokenAvailability(expectedToken))
-        .resolves.not.toThrowError(NotFoundError);
+        .resolves.not.toThrowError(InvariantError);
     });
   });
 

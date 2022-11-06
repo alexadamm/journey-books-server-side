@@ -1,4 +1,4 @@
-const NotFoundError = require('../../../Commons/exceptions/NotFoundError');
+const InvariantError = require('../../../Commons/exceptions/InvariantError');
 const AuthenticationsRepository = require('../../../Domains/authentications/AuthenticationsRepository');
 
 class AuthenticationsRepositoryPostgres extends AuthenticationsRepository {
@@ -14,7 +14,7 @@ class AuthenticationsRepositoryPostgres extends AuthenticationsRepository {
   async checkTokenAvailability(token) {
     const result = await this.pool.Authentication.findUnique({ where: { token } });
     if (!result) {
-      throw new NotFoundError({ token: ['Refresh token is not found'] });
+      throw new InvariantError({ refreshToken: ['Invalid token'] });
     }
   }
 

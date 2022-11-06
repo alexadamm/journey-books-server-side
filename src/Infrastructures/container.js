@@ -23,6 +23,7 @@ const BooksRepositoryPostgres = require('./repositories/postgres/BooksRepository
 const AddBookUseCase = require('../Applications/use_cases/AddBookUseCase');
 const BooksValidator = require('../Applications/validators/BooksValidator');
 const BooksValidatorJoi = require('./validators/books/BooksValidatorJoi');
+const RefreshAuthenticationUseCase = require('../Applications/use_cases/RefreshAuthenticationUseCase');
 
 // creating container
 const container = createContainer();
@@ -184,6 +185,27 @@ container.register([
         {
           name: 'booksRepository',
           internal: BooksRepository.name,
+        },
+      ],
+    },
+  },
+  {
+    key: RefreshAuthenticationUseCase.name,
+    Class: RefreshAuthenticationUseCase,
+    parameter: {
+      injectType: 'destructuring',
+      dependencies: [
+        {
+          name: 'authenticationsValidator',
+          internal: AuthenticationsValidator.name,
+        },
+        {
+          name: 'tokenManager',
+          internal: TokenManager.name,
+        },
+        {
+          name: 'authenticationsRepository',
+          internal: AuthenticationsRepository.name,
         },
       ],
     },

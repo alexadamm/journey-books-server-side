@@ -75,6 +75,45 @@ describe('AuthenticationsValidator', () => {
     });
   });
 
+  describe('put authentication request payload', () => {
+    it('should throw InvariantError when payload not contain refreshToken', () => {
+      // Arrange
+      const payload = {};
+
+      const authenticationsValidator = new AuthenticationsValidatorJoi(Joi);
+
+      // Action and Assert
+      expect(() => authenticationsValidator.validatePutAuthenticationPayload(payload))
+        .toThrowError(InvariantError);
+    });
+
+    it('should not throw InvariantError when refreshToken did not meet data type specification', () => {
+      // Arrange
+      const payload = {
+        refreshToken: 123,
+      };
+
+      const authenticationsValidator = new AuthenticationsValidatorJoi(Joi);
+
+      // Action and Assert
+      expect(() => authenticationsValidator.validatePutAuthenticationPayload(payload))
+        .toThrowError(InvariantError);
+    });
+
+    it('should not throw InvariantError when payload validated successfully', () => {
+      // Arrange
+      const payload = {
+        refreshToken: 'refresh_token',
+      };
+
+      const authenticationsValidator = new AuthenticationsValidatorJoi(Joi);
+
+      // Action and Assert
+      expect(() => authenticationsValidator.validatePutAuthenticationPayload(payload))
+        .not.toThrowError(InvariantError);
+    });
+  });
+
   describe('delete authentication request payload', () => {
     it('should throw InvariantError when payload not contain refreshToken', () => {
       // Arrange

@@ -7,6 +7,10 @@ const AuthenticationsSchema = (joi) => ({
   DeleteAuthenticationSchema: joi.object({
     refreshToken: joi.string().required(),
   }),
+
+  PutAuthenticationSchema: joi.object({
+    refreshToken: joi.string().required(),
+  }),
 });
 
 module.exports = AuthenticationsSchema;

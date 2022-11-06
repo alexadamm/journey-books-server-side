@@ -6,6 +6,10 @@ class AuthenticationsValidator {
   validateDeleteAuthenticationPayload(params) {
     throw new Error('AUTHENTICATIONS_VALIDATOR.METHOD_NOT_IMPLEMENTED');
   }
+
+  validatePutAuthenticationPayload(payload) {
+    throw new Error('AUTHENTICATIONS_VALIDATOR.METHOD_NOT_IMPLEMENTED');
+  }
 }
 
 module.exports = AuthenticationsValidator;

@@ -8,8 +8,8 @@ const ServerTestHelper = {
     });
     const { id: userId } = newUserResponse.body.data.addedUser;
     const loginResponse = await request(app).post('/authentications').send({ username, password });
-    const { accessToken } = loginResponse.body.data;
-    return { userId, accessToken };
+    const { accessToken, refreshToken } = loginResponse.body.data;
+    return { userId, accessToken, refreshToken };
   },
 };
 
