@@ -1,12 +1,14 @@
 /* istanbul ignore file */
 const pool = require('../src/Infrastructures/database/postgres/pool');
 
-const DatabaseHelper = {
+const BooksTableHelper = {
+  async findBookByOwnerId(ownerId) {
+    return pool.Book.findMany({ where: { ownerId } });
+  },
+
   async cleanTable() {
-    await pool.Book.deleteMany();
     await pool.Authentication.deleteMany();
-    await pool.User.deleteMany();
   },
 };
 
-module.exports = DatabaseHelper;
+module.exports = BooksTableHelper;

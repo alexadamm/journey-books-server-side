@@ -8,7 +8,7 @@ const HasherArgon = require('./securities/HasherArgon');
 const UsersRepository = require('../Domains/users/UsersRepository');
 const UsersRepositoryPostgres = require('./repositories/postgres/UsersRepositoryPostgres');
 const pool = require('./database/postgres/pool');
-const UserRegistration = require('../Applications/use_cases/UserRegistrationUseCase');
+const UserRegistrationUseCase = require('../Applications/use_cases/UserRegistrationUseCase');
 const UsersValidator = require('../Applications/validators/UsersValidator');
 const UsersValidatorJoi = require('./validators/users/UsersValidatorJoi');
 const TokenManager = require('../Applications/securities/TokenManager');
@@ -18,6 +18,11 @@ const AuthenticationsRepositoryPostgres = require('./repositories/postgres/Authe
 const UserLoginUseCase = require('../Applications/use_cases/UserLoginUseCase');
 const AuthenticationsValidatorJoi = require('./validators/authentications/AuthenticationsValidatorJoi');
 const AuthenticationsValidator = require('../Applications/validators/AuthenticationsValidator');
+const BooksRepository = require('../Domains/books/BooksRepository');
+const BooksRepositoryPostgres = require('./repositories/postgres/BooksRepositoryPostgres');
+const AddBookUseCase = require('../Applications/use_cases/AddBookUseCase');
+const BooksValidator = require('../Applications/validators/BooksValidator');
+const BooksValidatorJoi = require('./validators/books/BooksValidatorJoi');
 
 // creating container
 const container = createContainer();
@@ -69,6 +74,17 @@ container.register([
     },
   },
   {
+    key: BooksValidator.name,
+    Class: BooksValidatorJoi,
+    parameter: {
+      dependencies: [
+        {
+          concrete: Joi,
+        },
+      ],
+    },
+  },
+  {
     key: UsersRepository.name,
     Class: UsersRepositoryPostgres,
     parameter: {
@@ -90,13 +106,24 @@ container.register([
       ],
     },
   },
+  {
+    key: BooksRepository.name,
+    Class: BooksRepositoryPostgres,
+    parameter: {
+      dependencies: [
+        {
+          concrete: pool,
+        },
+      ],
+    },
+  },
 ]);
 
 // registering use cases
 container.register([
   {
-    key: UserRegistration.name,
-    Class: UserRegistration,
+    key: UserRegistrationUseCase.name,
+    Class: UserRegistrationUseCase,
     parameter: {
       injectType: 'destructuring',
       dependencies: [
@@ -140,6 +167,23 @@ container.register([
         {
           name: 'authenticationsRepository',
           internal: AuthenticationsRepository.name,
+        },
+      ],
+    },
+  },
+  {
+    key: AddBookUseCase.name,
+    Class: AddBookUseCase,
+    parameter: {
+      injectType: 'destructuring',
+      dependencies: [
+        {
+          name: 'booksValidator',
+          internal: BooksValidator.name,
+        },
+        {
+          name: 'booksRepository',
+          internal: BooksRepository.name,
         },
       ],
     },

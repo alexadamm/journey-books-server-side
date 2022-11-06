@@ -5,9 +5,12 @@ const users = require('../../Interfaces/http/api/users/routes');
 const authentications = require('../../Interfaces/http/api/authentications/routes');
 
 const ServerMiddlewares = require('./middlewares');
+const books = require('../../Interfaces/http/api/books/routes');
 
 const createServer = async (container) => {
   const app = express();
+
+  const middlewares = new ServerMiddlewares(container);
 
   app.use(express.json());
   app.use(helmet());
@@ -15,6 +18,7 @@ const createServer = async (container) => {
 
   app.use('/users', users(container));
   app.use('/authentications', authentications(container));
+  app.use('/books', books(container));
   app.get('/', async (req, res) => {
     res.status(200).json({
       isSuccess: true,
@@ -22,8 +26,8 @@ const createServer = async (container) => {
     });
   });
 
-  app.use(ServerMiddlewares.unregisteredRouteHandler);
-  app.use(ServerMiddlewares.errorHandler);
+  app.use(middlewares.unregisteredRouteHandler);
+  app.use(middlewares.errorHandler);
 
   return app;
 };
