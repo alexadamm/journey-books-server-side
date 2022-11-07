@@ -3,7 +3,7 @@ class AuthenticationsValidator {
     throw new Error('AUTHENTICATIONS_VALIDATOR.METHOD_NOT_IMPLEMENTED');
   }
 
-  validateDeleteAuthenticationPayload(params) {
+  validateDeleteAuthenticationPayload(payload) {
     throw new Error('AUTHENTICATIONS_VALIDATOR.METHOD_NOT_IMPLEMENTED');
   }
 

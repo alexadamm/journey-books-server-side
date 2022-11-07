@@ -121,4 +121,83 @@ describe('/authentications endpoint', () => {
       expect(refreshToken).toContain('Invalid token');
     });
   });
+
+  describe('when DELETE /authentications', () => {
+    it('should response 200 and success message', async () => {
+      // Arrange
+      const app = await createServer(container);
+
+      const { accessToken, refreshToken } = await ServerTestHelper.newUser({ request, app }, { username: 'johndoe' });
+
+      // Action
+      const response = await request(app).delete('/authentications').send({ refreshToken }).set('Authorization', `Bearer ${accessToken}`);
+
+      // Assert
+      expect(response.statusCode).toEqual(200);
+      expect(response.body.isSuccess).toEqual(true);
+      expect(response.body.message).toEqual('User logout successfully');
+    });
+
+    it('should response 401 when access user unauthenticated', async () => {
+      // Arrange
+      const app = await createServer(container);
+
+      // Action
+      const response = await request(app).delete('/authentications').send({});
+
+      // Assert
+      expect(response.statusCode).toEqual(401);
+      expect(response.body.isSuccess).toEqual(false);
+      expect(response.body.errors.message).toEqual('No token provided');
+    });
+
+    it('should response 400 when request payload not contain needed property', async () => {
+      // Arrange
+      const app = await createServer(container);
+
+      const { accessToken } = await ServerTestHelper.newUser({ request, app }, { username: 'johndoe' });
+
+      // Action
+      const response = await request(app).delete('/authentications').send({}).set('Authorization', `Bearer ${accessToken}`);
+
+      // Assert
+      const { refreshToken } = response.body.errors;
+      expect(response.statusCode).toEqual(400);
+      expect(response.body.isSuccess).toEqual(false);
+      expect(refreshToken).toContain('"refreshToken" is required');
+    });
+
+    it('should response 400 when request payload not meet data type specification', async () => {
+      // Arrange
+      const app = await createServer(container);
+
+      const { accessToken } = await ServerTestHelper.newUser({ request, app }, { username: 'johndoe' });
+
+      // Action
+      const response = await request(app).delete('/authentications').send({ refreshToken: 123 }).set('Authorization', `Bearer ${accessToken}`);
+
+      // Assert
+      const { refreshToken } = response.body.errors;
+      expect(response.statusCode).toEqual(400);
+      expect(response.body.isSuccess).toEqual(false);
+      expect(refreshToken).toContain('"refreshToken" must be a string');
+    });
+
+    it('should response 400 when refresh token not found', async () => {
+      // Arrange
+      const app = await createServer(container);
+
+      const { accessToken, refreshToken: token } = await ServerTestHelper.newUser({ request, app }, { username: 'johndoe' });
+      await AuthenticationsTableHelper.deleteToken(token);
+
+      // Action
+      const response = await request(app).delete('/authentications').send({ refreshToken: token }).set('Authorization', `Bearer ${accessToken}`);
+
+      // Assert
+      const { refreshToken } = response.body.errors;
+      expect(response.statusCode).toEqual(400);
+      expect(response.body.isSuccess).toEqual(false);
+      expect(refreshToken).toContain('Invalid token');
+    });
+  });
 });

@@ -24,6 +24,7 @@ const AddBookUseCase = require('../Applications/use_cases/AddBookUseCase');
 const BooksValidator = require('../Applications/validators/BooksValidator');
 const BooksValidatorJoi = require('./validators/books/BooksValidatorJoi');
 const RefreshAuthenticationUseCase = require('../Applications/use_cases/RefreshAuthenticationUseCase');
+const UserLogoutUseCase = require('../Applications/use_cases/UserLogoutUseCase');
 
 // creating container
 const container = createContainer();
@@ -202,6 +203,23 @@ container.register([
         {
           name: 'tokenManager',
           internal: TokenManager.name,
+        },
+        {
+          name: 'authenticationsRepository',
+          internal: AuthenticationsRepository.name,
+        },
+      ],
+    },
+  },
+  {
+    key: UserLogoutUseCase.name,
+    Class: UserLogoutUseCase,
+    parameter: {
+      injectType: 'destructuring',
+      dependencies: [
+        {
+          name: 'authenticationsValidator',
+          internal: AuthenticationsValidator.name,
         },
         {
           name: 'authenticationsRepository',
