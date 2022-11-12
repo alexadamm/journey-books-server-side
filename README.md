@@ -1,4 +1,5 @@
 # Journey Books Server-Side
+
 Node.js back-end with clean architecture
 
 ## Project Structure
@@ -43,7 +44,7 @@ Install [Node.js and npm](https://nodejs.org/en/download/).
 
 Install [PostgreSQL](https://www.postgresql.org/download/).
 
-Set up the [database](https://github.com/alexadamm/journey-books-server-side#database-configuration) and the [development environment](https://github.com/alexadamm/journey-books-server-side#development-environment).
+Set up the [development environment](https://github.com/alexadamm/journey-books-server-side#development-environment).
 
 ### Step 2: Install dependencies
 
@@ -58,11 +59,6 @@ Set up the [database](https://github.com/alexadamm/journey-books-server-side#dat
 - Run `npm run start:dev`.
 - The server address will be displayed to you as `http://0.0.0.0:{PORT}`.
 
-
-### Database configuration
-
-This app using Prisma which automatically create tables on the database. You need to create database first on PostgreSQL before run the database migrations.
-
 ### Development environment
 
 To run the development migrations and server, you should define the development environment with `.env` file on the root directory.
@@ -74,14 +70,14 @@ To run the development migrations and server, you should define the development 
 PORT                → Port of http server.
 
 # POSTGRES
-DATABASE_URL        → URL of postgresql database table.
-DATABASE_URL_TEST   → URL of postgresql test database table.
+DATABASE_URL        → URL of postgresql database.
+DATABASE_URL_TEST   → URL of postgresql test database.
 
 # HASHER
 SALT                → Salt round for the encrypter.
 
 # TOKENIZE
 ACCESS_TOKEN_KEY    → Secret token key for access token on authentication.
-REFRESH_TOKEN_KEY   → Secret token key Refresh token on authentication.
-ACCCESS_TOKEN_AGE   → Access token age (seconds) on authentication.
+REFRESH_TOKEN_KEY   → Secret token key for refresh token on authentication.
+ACCCESS_TOKEN_AGE   → Access token age on authentication. e.g. '3h' for 3 hours
 ```
