@@ -11,7 +11,11 @@ const UsersTableTestHelper = {
   }) {
     await pool.User.create({
       data: {
-        id, email, username, password, fullname,
+        id,
+        email,
+        username,
+        password,
+        fullname,
       },
     });
   },

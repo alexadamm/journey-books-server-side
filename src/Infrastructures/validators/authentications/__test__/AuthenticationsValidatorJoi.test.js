@@ -14,8 +14,7 @@ describe('AuthenticationsValidator', () => {
       const authenticationsValidator = new AuthenticationsValidatorJoi(Joi);
 
       // Action and Assert
-      expect(() => authenticationsValidator.validatePostAuthenticationPayload(payload))
-        .toThrowError(InvariantError);
+      expect(() => authenticationsValidator.validatePostAuthenticationPayload(payload)).toThrowError(InvariantError);
     });
 
     it('should throw InvariantError when payload did not meet data type specification', () => {
@@ -28,8 +27,7 @@ describe('AuthenticationsValidator', () => {
       const authenticationsValidator = new AuthenticationsValidatorJoi(Joi);
 
       // Action and Assert
-      expect(() => authenticationsValidator.validatePostAuthenticationPayload(payload))
-        .toThrowError(InvariantError);
+      expect(() => authenticationsValidator.validatePostAuthenticationPayload(payload)).toThrowError(InvariantError);
     });
 
     it('should throw InvariantError when username more than 50 character', () => {
@@ -42,8 +40,7 @@ describe('AuthenticationsValidator', () => {
       const authenticationsValidator = new AuthenticationsValidatorJoi(Joi);
 
       // Action and Assert
-      expect(() => authenticationsValidator.validatePostAuthenticationPayload(payload))
-        .toThrowError(InvariantError);
+      expect(() => authenticationsValidator.validatePostAuthenticationPayload(payload)).toThrowError(InvariantError);
     });
 
     it('should throw InvariantError when username contain restricted character', () => {
@@ -56,8 +53,7 @@ describe('AuthenticationsValidator', () => {
       const authenticationsValidator = new AuthenticationsValidatorJoi(Joi);
 
       // Action and Assert
-      expect(() => authenticationsValidator.validatePostAuthenticationPayload(payload))
-        .toThrowError(InvariantError);
+      expect(() => authenticationsValidator.validatePostAuthenticationPayload(payload)).toThrowError(InvariantError);
     });
 
     it('should not throw InvariantError when validated', () => {
@@ -70,8 +66,7 @@ describe('AuthenticationsValidator', () => {
       const authenticationsValidator = new AuthenticationsValidatorJoi(Joi);
 
       // Action and Assert
-      expect(() => authenticationsValidator.validatePostAuthenticationPayload(payload))
-        .not.toThrowError(InvariantError);
+      expect(() => authenticationsValidator.validatePostAuthenticationPayload(payload)).not.toThrowError(InvariantError);
     });
   });
 
@@ -83,8 +78,9 @@ describe('AuthenticationsValidator', () => {
       const authenticationsValidator = new AuthenticationsValidatorJoi(Joi);
 
       // Action and Assert
-      expect(() => authenticationsValidator.validatePutAuthenticationPayload(payload))
-        .toThrowError(InvariantError);
+      expect(() => authenticationsValidator.validatePutAuthenticationPayload(payload)).toThrowError(
+        InvariantError,
+      );
     });
 
     it('should not throw InvariantError when refreshToken did not meet data type specification', () => {
@@ -96,8 +92,9 @@ describe('AuthenticationsValidator', () => {
       const authenticationsValidator = new AuthenticationsValidatorJoi(Joi);
 
       // Action and Assert
-      expect(() => authenticationsValidator.validatePutAuthenticationPayload(payload))
-        .toThrowError(InvariantError);
+      expect(() => authenticationsValidator.validatePutAuthenticationPayload(payload)).toThrowError(
+        InvariantError,
+      );
     });
 
     it('should not throw InvariantError when payload validated successfully', () => {
@@ -109,8 +106,7 @@ describe('AuthenticationsValidator', () => {
       const authenticationsValidator = new AuthenticationsValidatorJoi(Joi);
 
       // Action and Assert
-      expect(() => authenticationsValidator.validatePutAuthenticationPayload(payload))
-        .not.toThrowError(InvariantError);
+      expect(() => authenticationsValidator.validatePutAuthenticationPayload(payload)).not.toThrowError(InvariantError);
     });
   });
 
@@ -122,8 +118,7 @@ describe('AuthenticationsValidator', () => {
       const authenticationsValidator = new AuthenticationsValidatorJoi(Joi);
 
       // Action and Assert
-      expect(() => authenticationsValidator.validateDeleteAuthenticationPayload(payload))
-        .toThrowError(InvariantError);
+      expect(() => authenticationsValidator.validateDeleteAuthenticationPayload(payload)).toThrowError(InvariantError);
     });
 
     it('should not throw InvariantError when refreshToken did not meet data type specification', () => {
@@ -135,8 +130,7 @@ describe('AuthenticationsValidator', () => {
       const authenticationsValidator = new AuthenticationsValidatorJoi(Joi);
 
       // Action and Assert
-      expect(() => authenticationsValidator.validateDeleteAuthenticationPayload(payload))
-        .toThrowError(InvariantError);
+      expect(() => authenticationsValidator.validateDeleteAuthenticationPayload(payload)).toThrowError(InvariantError);
     });
 
     it('should not throw InvariantError when payload validated successfully', () => {
@@ -148,8 +142,7 @@ describe('AuthenticationsValidator', () => {
       const authenticationsValidator = new AuthenticationsValidatorJoi(Joi);
 
       // Action and Assert
-      expect(() => authenticationsValidator.validateDeleteAuthenticationPayload(payload))
-        .not.toThrowError(InvariantError);
+      expect(() => authenticationsValidator.validateDeleteAuthenticationPayload(payload)).not.toThrowError(InvariantError);
     });
   });
 });

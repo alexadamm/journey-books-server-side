@@ -16,15 +16,18 @@ describe('RefreshAuthenticaitonUseCase', () => {
     const mockTokenManager = new TokenManager();
     const mockAuthenticationsRepository = new AuthenticationsRepository();
 
-    mockAuthenticationsValidator.validatePutAuthenticationPayload = jest.fn()
+    mockAuthenticationsValidator.validatePutAuthenticationPayload = jest
+      .fn()
       .mockImplementation(() => Promise.resolve());
-    mockTokenManager.verifyRefreshToken = jest.fn()
+    mockTokenManager.verifyRefreshToken = jest.fn().mockImplementation(() => Promise.resolve());
+    mockAuthenticationsRepository.checkTokenAvailability = jest
+      .fn()
       .mockImplementation(() => Promise.resolve());
-    mockAuthenticationsRepository.checkTokenAvailability = jest.fn()
-      .mockImplementation(() => Promise.resolve());
-    mockTokenManager.decodePayload = jest.fn()
+    mockTokenManager.decodePayload = jest
+      .fn()
       .mockImplementation(() => Promise.resolve({ username: 'johndoe', id: '12345678-abcd-abcd-abcd-123456789012' }));
-    mockTokenManager.createAccessToken = jest.fn()
+    mockTokenManager.createAccessToken = jest
+      .fn()
       .mockImplementation(() => Promise.resolve(expectedAccessToken));
 
     const refreshAuthenticationUseCase = new RefreshAuthenticationUseCase({
@@ -37,14 +40,15 @@ describe('RefreshAuthenticaitonUseCase', () => {
     const accessToken = await refreshAuthenticationUseCase.execute(payload);
 
     // Assert
-    expect(mockTokenManager.verifyRefreshToken)
-      .toBeCalledWith(payload.refreshToken);
-    expect(mockAuthenticationsRepository.checkTokenAvailability)
-      .toBeCalledWith(payload.refreshToken);
-    expect(mockTokenManager.decodePayload)
-      .toBeCalledWith(payload.refreshToken);
-    expect(mockTokenManager.createAccessToken)
-      .toBeCalledWith({ username: 'johndoe', id: '12345678-abcd-abcd-abcd-123456789012' });
+    expect(mockTokenManager.verifyRefreshToken).toBeCalledWith(payload.refreshToken);
+    expect(mockAuthenticationsRepository.checkTokenAvailability).toBeCalledWith(
+      payload.refreshToken,
+    );
+    expect(mockTokenManager.decodePayload).toBeCalledWith(payload.refreshToken);
+    expect(mockTokenManager.createAccessToken).toBeCalledWith({
+      username: 'johndoe',
+      id: '12345678-abcd-abcd-abcd-123456789012',
+    });
     expect(accessToken).toEqual('accessToken');
   });
 });

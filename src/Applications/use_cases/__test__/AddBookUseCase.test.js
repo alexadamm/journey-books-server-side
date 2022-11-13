@@ -21,9 +21,9 @@ describe('AddBookUseCase', () => {
     const mockBooksValidator = new BooksValidator();
     const mockBooksRepository = new BooksRepository();
 
-    mockBooksValidator.validatePostBookPayload = jest.fn()
-      .mockImplementation(() => undefined);
-    mockBooksRepository.addBook = jest.fn()
+    mockBooksValidator.validatePostBookPayload = jest.fn().mockImplementation(() => undefined);
+    mockBooksRepository.addBook = jest
+      .fn()
       .mockImplementation(() => Promise.resolve(expectedAddedBook));
 
     const addBookUseCase = new AddBookUseCase({

@@ -21,7 +21,9 @@ describe('UsersServicePrima', () => {
       const usersRepository = new UsersRepositoryPostgres(pool);
 
       // Action and Assert
-      await expect(usersRepository.verifyAvailableEmail('johndoe@journeymail.com')).rejects.toThrowError(InvariantError);
+      await expect(
+        usersRepository.verifyAvailableEmail('johndoe@journeymail.com'),
+      ).rejects.toThrowError(InvariantError);
     });
 
     it('should not throw InvariantError when email available', async () => {
@@ -29,7 +31,9 @@ describe('UsersServicePrima', () => {
       const usersRepository = new UsersRepositoryPostgres(pool);
 
       // Action and Assert
-      await expect(usersRepository.verifyAvailableEmail('johndoe@journeymail.com')).resolves.not.toThrowError(InvariantError);
+      await expect(
+        usersRepository.verifyAvailableEmail('johndoe@journeymail.com'),
+      ).resolves.not.toThrowError(InvariantError);
     });
   });
 
@@ -40,7 +44,9 @@ describe('UsersServicePrima', () => {
       const usersRepository = new UsersRepositoryPostgres(pool);
 
       // Action and Assert
-      await expect(usersRepository.verifyAvailableUsername('johndoe')).rejects.toThrowError(InvariantError);
+      await expect(usersRepository.verifyAvailableUsername('johndoe')).rejects.toThrowError(
+        InvariantError,
+      );
     });
 
     it('should not throw InvariantError when username available', async () => {
@@ -48,7 +54,9 @@ describe('UsersServicePrima', () => {
       const usersRepository = new UsersRepositoryPostgres(pool);
 
       // Action and Assert
-      await expect(usersRepository.verifyAvailableUsername('johndoe')).resolves.not.toThrowError(InvariantError);
+      await expect(usersRepository.verifyAvailableUsername('johndoe')).resolves.not.toThrowError(
+        InvariantError,
+      );
     });
   });
 
@@ -86,12 +94,14 @@ describe('UsersServicePrima', () => {
       const addedUser = await usersRepository.addUser(payload);
 
       // Assert
-      expect(addedUser).toStrictEqual(new UserDetail({
-        id: payload.id,
-        email: payload.email,
-        username: payload.username,
-        fullname: payload.fullname,
-      }));
+      expect(addedUser).toStrictEqual(
+        new UserDetail({
+          id: payload.id,
+          email: payload.email,
+          username: payload.username,
+          fullname: payload.fullname,
+        }),
+      );
     });
   });
 
@@ -129,20 +139,24 @@ describe('UsersServicePrima', () => {
     it('should return user correctly', async () => {
       // Arrange
       const userId = '12345678-abcd-abcd-abcd-123456789012';
-      await UsersTableTestHelper
-        .addUser({ id: '12345678-abcd-abcd-abcd-123456789012', username: 'johndoe' });
+      await UsersTableTestHelper.addUser({
+        id: '12345678-abcd-abcd-abcd-123456789012',
+        username: 'johndoe',
+      });
       const usersRepository = new UsersRepositoryPostgres(pool);
 
       // Action
       const user = await usersRepository.getUserById(userId);
 
       // Assert
-      expect(user).toStrictEqual(new UserDetail({
-        id: '12345678-abcd-abcd-abcd-123456789012',
-        email: 'johndoe@journeymail.com',
-        username: 'johndoe',
-        fullname: 'John Doe',
-      }));
+      expect(user).toStrictEqual(
+        new UserDetail({
+          id: '12345678-abcd-abcd-abcd-123456789012',
+          email: 'johndoe@journeymail.com',
+          username: 'johndoe',
+          fullname: 'John Doe',
+        }),
+      );
     });
   });
 
@@ -153,8 +167,7 @@ describe('UsersServicePrima', () => {
       const usersRepository = new UsersRepositoryPostgres(pool);
 
       // Action and Assert
-      await expect(usersRepository.getIdByUsername(username))
-        .rejects.toThrowError(InvariantError);
+      await expect(usersRepository.getIdByUsername(username)).rejects.toThrowError(InvariantError);
     });
 
     it('should return userId correctly', async () => {
@@ -179,8 +192,9 @@ describe('UsersServicePrima', () => {
       const usersRepository = new UsersRepositoryPostgres(pool);
 
       // Action and Assert
-      await expect(usersRepository.getPasswordByUsername(username))
-        .rejects.toThrowError(AuthenticationError);
+      await expect(usersRepository.getPasswordByUsername(username)).rejects.toThrowError(
+        AuthenticationError,
+      );
     });
     it('should return userPassword correctly', async () => {
       // Arrange

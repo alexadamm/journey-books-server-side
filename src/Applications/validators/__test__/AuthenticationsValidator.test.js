@@ -6,8 +6,14 @@ describe('AuthenticationsValidator interface', () => {
     const authenticationsValidator = new AuthenticationsValidator();
 
     // Action and Assert
-    expect(authenticationsValidator.validatePostAuthenticationPayload).toThrowError('AUTHENTICATIONS_VALIDATOR.METHOD_NOT_IMPLEMENTED');
-    expect(authenticationsValidator.validateDeleteAuthenticationPayload).toThrowError('AUTHENTICATIONS_VALIDATOR.METHOD_NOT_IMPLEMENTED');
-    expect(authenticationsValidator.validatePutAuthenticationPayload).toThrowError('AUTHENTICATIONS_VALIDATOR.METHOD_NOT_IMPLEMENTED');
+    expect(authenticationsValidator.validatePostAuthenticationPayload).toThrowError(
+      'AUTHENTICATIONS_VALIDATOR.METHOD_NOT_IMPLEMENTED',
+    );
+    expect(authenticationsValidator.validateDeleteAuthenticationPayload).toThrowError(
+      'AUTHENTICATIONS_VALIDATOR.METHOD_NOT_IMPLEMENTED',
+    );
+    expect(authenticationsValidator.validatePutAuthenticationPayload).toThrowError(
+      'AUTHENTICATIONS_VALIDATOR.METHOD_NOT_IMPLEMENTED',
+    );
   });
 });

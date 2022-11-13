@@ -28,20 +28,21 @@ describe('UserLoginUseCase', () => {
     const mockTokenManager = new TokenManager();
     const mockAuthenticationsRepository = new AuthenticationsRepository();
 
-    mockAuthenticationValidator.validatePostAuthenticationPayload = jest.fn()
-      .mockImplementation();
-    mockUsersRepository.getPasswordByUsername = jest.fn()
+    mockAuthenticationValidator.validatePostAuthenticationPayload = jest.fn().mockImplementation();
+    mockUsersRepository.getPasswordByUsername = jest
+      .fn()
       .mockImplementation(() => Promise.resolve(encryptedPassword));
-    mockHasher.compare = jest.fn()
-      .mockImplementation(() => Promise.resolve());
-    mockUsersRepository.getIdByUsername = jest.fn()
+    mockHasher.compare = jest.fn().mockImplementation(() => Promise.resolve());
+    mockUsersRepository.getIdByUsername = jest
+      .fn()
       .mockImplementation(() => Promise.resolve(userId));
-    mockTokenManager.createAccessToken = jest.fn()
+    mockTokenManager.createAccessToken = jest
+      .fn()
       .mockImplementation(() => Promise.resolve(expectedAuthentication.accessToken));
-    mockTokenManager.createRefreshToken = jest.fn()
+    mockTokenManager.createRefreshToken = jest
+      .fn()
       .mockImplementation(() => Promise.resolve(expectedAuthentication.refreshToken));
-    mockAuthenticationsRepository.addToken = jest.fn()
-      .mockImplementation(() => Promise.resolve());
+    mockAuthenticationsRepository.addToken = jest.fn().mockImplementation(() => Promise.resolve());
 
     const loginUserUseCase = new UserLoginUseCase({
       authenticationsValidator: mockAuthenticationValidator,
@@ -60,11 +61,16 @@ describe('UserLoginUseCase', () => {
     expect(mockUsersRepository.getPasswordByUsername).toBeCalledWith(payload.username);
     expect(mockHasher.compare).toBeCalledWith(payload.password, encryptedPassword);
     expect(mockUsersRepository.getIdByUsername).toBeCalledWith(payload.username);
-    expect(mockTokenManager.createAccessToken)
-      .toBeCalledWith({ id: userId, username: payload.username });
-    expect(mockTokenManager.createRefreshToken)
-      .toBeCalledWith({ id: userId, username: payload.username });
-    expect(mockAuthenticationsRepository.addToken)
-      .toBeCalledWith(expectedAuthentication.refreshToken);
+    expect(mockTokenManager.createAccessToken).toBeCalledWith({
+      id: userId,
+      username: payload.username,
+    });
+    expect(mockTokenManager.createRefreshToken).toBeCalledWith({
+      id: userId,
+      username: payload.username,
+    });
+    expect(mockAuthenticationsRepository.addToken).toBeCalledWith(
+      expectedAuthentication.refreshToken,
+    );
   });
 });

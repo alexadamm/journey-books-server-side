@@ -13,11 +13,7 @@ class HasherArgon extends Hasher {
   }
 
   async compare(plain, encrypted) {
-    const result = await this.argon2.verify(
-      encrypted,
-      plain,
-      { salt: this.salt },
-    );
+    const result = await this.argon2.verify(encrypted, plain, { salt: this.salt });
 
     if (!result) {
       throw new AuthenticationError('Wrong credentials. Invalid username or password');

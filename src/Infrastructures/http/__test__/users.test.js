@@ -88,8 +88,7 @@ describe('/users endpoint', () => {
 
     it('should response 400 when request payload not contain needed property', async () => {
       // Arrange
-      const payload = {
-      };
+      const payload = {};
 
       const app = await createServer(container);
 
@@ -152,8 +151,7 @@ describe('/users endpoint', () => {
       const { email } = response.body.errors;
       expect(response.statusCode).toEqual(400);
       expect(response.body.isSuccess).toEqual(false);
-      expect(email)
-        .toContain('"email" must be a valid email');
+      expect(email).toContain('"email" must be a valid email');
     });
 
     it('should response 400 when username more than 50 characters', async () => {
@@ -174,8 +172,9 @@ describe('/users endpoint', () => {
       const { username } = response.body.errors;
       expect(response.statusCode).toEqual(400);
       expect(response.body.isSuccess).toEqual(false);
-      expect(username)
-        .toContain('"username" length must be less than or equal to 50 characters long');
+      expect(username).toContain(
+        '"username" length must be less than or equal to 50 characters long',
+      );
     });
 
     it('should response 400 when username contain restricted character', async () => {
@@ -196,8 +195,9 @@ describe('/users endpoint', () => {
       const { username } = response.body.errors;
       expect(response.statusCode).toEqual(400);
       expect(response.body.isSuccess).toEqual(false);
-      expect(username)
-        .toContain('"username" with value "johndoe!" fails to match the required pattern: /^[\\w]+$/');
+      expect(username).toContain(
+        '"username" with value "johndoe!" fails to match the required pattern: /^[\\w]+$/',
+      );
     });
   });
 });

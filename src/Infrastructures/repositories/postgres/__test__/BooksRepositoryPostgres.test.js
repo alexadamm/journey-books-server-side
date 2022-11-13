@@ -7,9 +7,11 @@ const NewBook = require('../../../../Domains/books/entities/NewBook');
 
 describe('BooksRepositoryPostgres', () => {
   beforeEach(async () => {
-    await UsersTableHelper.addUser(
-      { email: 'johndoe@journeymail.com', id: '12345678-abcd-abcd-abcd-123456789012', username: 'johndoe' },
-    );
+    await UsersTableHelper.addUser({
+      email: 'johndoe@journeymail.com',
+      id: '12345678-abcd-abcd-abcd-123456789012',
+      username: 'johndoe',
+    });
   });
 
   afterEach(async () => {

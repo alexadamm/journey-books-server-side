@@ -8,7 +8,9 @@ class BooksController {
   }
 
   async postBookController(req, res) {
-    const { auth: { userId } } = req;
+    const {
+      auth: { userId },
+    } = req;
     const addBookUseCase = this.container.getInstance(AddBookUseCase.name);
     const addedBook = await addBookUseCase.execute(userId, req.body);
 

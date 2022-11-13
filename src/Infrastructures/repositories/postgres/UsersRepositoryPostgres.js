@@ -11,8 +11,7 @@ class UsersRepositoryPrisma extends UsersRepository {
   }
 
   async verifyAvailableEmail(email) {
-    const result = await this.pool.User
-      .findUnique({ where: { email }, select: { id: true } });
+    const result = await this.pool.User.findUnique({ where: { email }, select: { id: true } });
 
     if (result) {
       throw new InvariantError({ email: ['Email is already registered'] });
@@ -20,8 +19,7 @@ class UsersRepositoryPrisma extends UsersRepository {
   }
 
   async verifyAvailableUsername(username) {
-    const result = await this.pool.User
-      .findUnique({ where: { username }, select: { id: true } });
+    const result = await this.pool.User.findUnique({ where: { username }, select: { id: true } });
 
     if (result) {
       throw new InvariantError({ username: ['Username is already taken'] });
@@ -29,13 +27,15 @@ class UsersRepositoryPrisma extends UsersRepository {
   }
 
   async addUser(newUser) {
-    const user = await this.pool.User
-      .create({
-        data: newUser,
-        select: {
-          id: true, email: true, username: true, fullname: true,
-        },
-      });
+    const user = await this.pool.User.create({
+      data: newUser,
+      select: {
+        id: true,
+        email: true,
+        username: true,
+        fullname: true,
+      },
+    });
 
     return new UserDetail(user);
   }
@@ -44,7 +44,10 @@ class UsersRepositoryPrisma extends UsersRepository {
     const results = await this.pool.User.findMany({
       where: { username: { contains: username } },
       select: {
-        id: true, email: true, username: true, fullname: true,
+        id: true,
+        email: true,
+        username: true,
+        fullname: true,
       },
     });
 
@@ -52,14 +55,15 @@ class UsersRepositoryPrisma extends UsersRepository {
   }
 
   async getUserById(userId) {
-    const result = await this.pool.User.findUnique(
-      {
-        where: { id: userId },
-        select: {
-          id: true, email: true, username: true, fullname: true,
-        },
+    const result = await this.pool.User.findUnique({
+      where: { id: userId },
+      select: {
+        id: true,
+        email: true,
+        username: true,
+        fullname: true,
       },
-    );
+    });
 
     if (!result) {
       throw new NotFoundError({ id: ['User not found'] });
@@ -88,7 +92,9 @@ class UsersRepositoryPrisma extends UsersRepository {
     });
 
     if (!user) {
-      throw new AuthenticationError({ message: ['Wrong credentials. Invalid username or password'] });
+      throw new AuthenticationError({
+        message: ['Wrong credentials. Invalid username or password'],
+      });
     }
 
     return user.password;

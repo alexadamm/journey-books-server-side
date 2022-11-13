@@ -24,7 +24,9 @@ describe('/authentications endpoint', () => {
       };
       const app = await createServer(container);
 
-      await request(app).post('/users').send({ ...requestPayload, email: 'johndoe@gmail.com', fullname: 'John Doe' });
+      await request(app)
+        .post('/users')
+        .send({ ...requestPayload, email: 'johndoe@gmail.com', fullname: 'John Doe' });
 
       // Action
       const response = await request(app).post('/authentications').send(requestPayload);
@@ -63,7 +65,10 @@ describe('/authentications endpoint', () => {
       // Arrange
       const app = await createServer(container);
 
-      const { refreshToken } = await ServerTestHelper.newUser({ request, app }, { username: 'johndoe' });
+      const { refreshToken } = await ServerTestHelper.newUser(
+        { request, app },
+        { username: 'johndoe' },
+      );
 
       // Action
       const response = await request(app).put('/authentications').send({ refreshToken });
@@ -108,7 +113,10 @@ describe('/authentications endpoint', () => {
       // Arrange
       const app = await createServer(container);
 
-      const { refreshToken: token } = await ServerTestHelper.newUser({ request, app }, { username: 'johndoe' });
+      const { refreshToken: token } = await ServerTestHelper.newUser(
+        { request, app },
+        { username: 'johndoe' },
+      );
       await AuthenticationsTableHelper.deleteToken(token);
 
       // Action
@@ -127,10 +135,16 @@ describe('/authentications endpoint', () => {
       // Arrange
       const app = await createServer(container);
 
-      const { accessToken, refreshToken } = await ServerTestHelper.newUser({ request, app }, { username: 'johndoe' });
+      const { accessToken, refreshToken } = await ServerTestHelper.newUser(
+        { request, app },
+        { username: 'johndoe' },
+      );
 
       // Action
-      const response = await request(app).delete('/authentications').send({ refreshToken }).set('Authorization', `Bearer ${accessToken}`);
+      const response = await request(app)
+        .delete('/authentications')
+        .send({ refreshToken })
+        .set('Authorization', `Bearer ${accessToken}`);
 
       // Assert
       expect(response.statusCode).toEqual(200);
@@ -155,10 +169,16 @@ describe('/authentications endpoint', () => {
       // Arrange
       const app = await createServer(container);
 
-      const { accessToken } = await ServerTestHelper.newUser({ request, app }, { username: 'johndoe' });
+      const { accessToken } = await ServerTestHelper.newUser(
+        { request, app },
+        { username: 'johndoe' },
+      );
 
       // Action
-      const response = await request(app).delete('/authentications').send({}).set('Authorization', `Bearer ${accessToken}`);
+      const response = await request(app)
+        .delete('/authentications')
+        .send({})
+        .set('Authorization', `Bearer ${accessToken}`);
 
       // Assert
       const { refreshToken } = response.body.errors;
@@ -171,10 +191,16 @@ describe('/authentications endpoint', () => {
       // Arrange
       const app = await createServer(container);
 
-      const { accessToken } = await ServerTestHelper.newUser({ request, app }, { username: 'johndoe' });
+      const { accessToken } = await ServerTestHelper.newUser(
+        { request, app },
+        { username: 'johndoe' },
+      );
 
       // Action
-      const response = await request(app).delete('/authentications').send({ refreshToken: 123 }).set('Authorization', `Bearer ${accessToken}`);
+      const response = await request(app)
+        .delete('/authentications')
+        .send({ refreshToken: 123 })
+        .set('Authorization', `Bearer ${accessToken}`);
 
       // Assert
       const { refreshToken } = response.body.errors;
@@ -187,11 +213,17 @@ describe('/authentications endpoint', () => {
       // Arrange
       const app = await createServer(container);
 
-      const { accessToken, refreshToken: token } = await ServerTestHelper.newUser({ request, app }, { username: 'johndoe' });
+      const { accessToken, refreshToken: token } = await ServerTestHelper.newUser(
+        { request, app },
+        { username: 'johndoe' },
+      );
       await AuthenticationsTableHelper.deleteToken(token);
 
       // Action
-      const response = await request(app).delete('/authentications').send({ refreshToken: token }).set('Authorization', `Bearer ${accessToken}`);
+      const response = await request(app)
+        .delete('/authentications')
+        .send({ refreshToken: token })
+        .set('Authorization', `Bearer ${accessToken}`);
 
       // Assert
       const { refreshToken } = response.body.errors;

@@ -12,11 +12,14 @@ describe('UserLogoutUseCase', () => {
     const mockAuthenticationsValidator = new AuthenticationsValidator();
     const mockAuthenticationsRepository = new AuthenticationsRepository();
 
-    mockAuthenticationsValidator.validateDeleteAuthenticationPayload = jest.fn()
+    mockAuthenticationsValidator.validateDeleteAuthenticationPayload = jest
+      .fn()
       .mockImplementation(() => undefined);
-    mockAuthenticationsRepository.checkTokenAvailability = jest.fn()
+    mockAuthenticationsRepository.checkTokenAvailability = jest
+      .fn()
       .mockImplementation(() => Promise.resolve());
-    mockAuthenticationsRepository.deleteToken = jest.fn()
+    mockAuthenticationsRepository.deleteToken = jest
+      .fn()
       .mockImplementation(() => Promise.resolve());
 
     const userLogoutUseCase = new UserLogoutUseCase({
@@ -28,11 +31,12 @@ describe('UserLogoutUseCase', () => {
     await userLogoutUseCase.execute(useCasePayload);
 
     // Assert
-    expect(mockAuthenticationsValidator.validateDeleteAuthenticationPayload)
-      .toBeCalledWith(useCasePayload);
-    expect(mockAuthenticationsRepository.checkTokenAvailability)
-      .toBeCalledWith(useCasePayload.refreshToken);
-    expect(mockAuthenticationsRepository.deleteToken)
-      .toBeCalledWith(useCasePayload.refreshToken);
+    expect(mockAuthenticationsValidator.validateDeleteAuthenticationPayload).toBeCalledWith(
+      useCasePayload,
+    );
+    expect(mockAuthenticationsRepository.checkTokenAvailability).toBeCalledWith(
+      useCasePayload.refreshToken,
+    );
+    expect(mockAuthenticationsRepository.deleteToken).toBeCalledWith(useCasePayload.refreshToken);
   });
 });

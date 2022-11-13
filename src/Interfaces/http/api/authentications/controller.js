@@ -25,8 +25,9 @@ class AuthenticationsController {
 
   async putAuthenticationController(req, res) {
     const payload = req.body;
-    const refreshAuthenticationUseCase = this.container
-      .getInstance(RefreshAuthenticationUseCase.name);
+    const refreshAuthenticationUseCase = this.container.getInstance(
+      RefreshAuthenticationUseCase.name,
+    );
     const accessToken = await refreshAuthenticationUseCase.execute(payload);
 
     res.status(200).json({

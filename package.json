@@ -10,7 +10,8 @@
     "start:dev": "nodemon src/app.js",
     "generate": "npx prisma generate",
     "db:migrate:prod": "npx prisma migrate deploy",
-    "db:migrate:dev": "npx prisma migrate dev"
+    "db:migrate:dev": "npx prisma migrate dev",
+    "format": "prettier-eslint --config .pretierrc --write \"**/*.{js,jsx}\"" 
   },
   "repository": {
     "type": "git",
@@ -30,7 +31,9 @@
     "helmet": "^6.0.0",
     "instances-container": "^2.0.6",
     "joi": "^17.7.0",
-    "jsonwebtoken": "^8.5.1"
+    "jsonwebtoken": "^8.5.1",
+    "prettier-eslint": "^15.0.1",
+    "prettier-eslint-cli": "^7.1.0"
   },
   "devDependencies": {
     "@types/jest": "^29.2.2",

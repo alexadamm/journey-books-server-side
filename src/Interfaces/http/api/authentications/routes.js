@@ -9,7 +9,11 @@ const authentications = (container) => {
 
   authenticationsRouter.post('/', authenticationsController.postAuthenticationController);
   authenticationsRouter.put('/', authenticationsController.putAuthenticationController);
-  authenticationsRouter.delete('/', authenticationHandler, authenticationsController.deleteAuthenticationController);
+  authenticationsRouter.delete(
+    '/',
+    authenticationHandler,
+    authenticationsController.deleteAuthenticationController,
+  );
 
   return authenticationsRouter;
 };

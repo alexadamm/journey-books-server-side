@@ -6,6 +6,8 @@ describe('BooksRepository interface', () => {
     const booksRepository = new BooksRepository();
 
     // Action and Assert
-    expect(booksRepository.addBook('')).rejects.toThrowError('BOOKS_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+    expect(booksRepository.addBook('')).rejects.toThrowError(
+      'BOOKS_REPOSITORY.METHOD_NOT_IMPLEMENTED',
+    );
   });
 });

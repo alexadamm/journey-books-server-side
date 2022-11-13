@@ -9,8 +9,9 @@ class BooksValidatorJoi extends BooksValidator {
   }
 
   validatePostBookPayload(payload) {
-    const validationResult = this.booksSchema.PostBookSchema
-      .validate(payload, { abortEarly: false });
+    const validationResult = this.booksSchema.PostBookSchema.validate(payload, {
+      abortEarly: false,
+    });
 
     if (validationResult.error) {
       ValidationErrorHandler(validationResult);

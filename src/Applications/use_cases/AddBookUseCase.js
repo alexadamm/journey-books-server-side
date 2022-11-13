@@ -1,10 +1,7 @@
 const NewBook = require('../../Domains/books/entities/NewBook');
 
 class AddNoteUseCase {
-  constructor({
-    booksValidator,
-    booksRepository,
-  }) {
+  constructor({ booksValidator, booksRepository }) {
     this.booksValidator = booksValidator;
     this.booksRepository = booksRepository;
   }

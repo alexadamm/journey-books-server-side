@@ -65,7 +65,9 @@ describe('HTTP server', () => {
     const { accessToken } = await ServerTestHelper.newUser({ request, app }, {});
 
     // Action
-    const response = await request(app).post('/books').set('Authorization', `Bearer ${accessToken}`);
+    const response = await request(app)
+      .post('/books')
+      .set('Authorization', `Bearer ${accessToken}`);
 
     // Assert
     expect(response.statusCode).not.toEqual(401);

@@ -17,10 +17,16 @@ describe('/books endpoint', () => {
         title: 'Clean Code',
       };
       const app = await createServer(container);
-      const { accessToken } = await ServerTestHelper.newUser({ request, app }, { username: 'johndoe' });
+      const { accessToken } = await ServerTestHelper.newUser(
+        { request, app },
+        { username: 'johndoe' },
+      );
 
       // Action
-      const response = await request(app).post('/books').send(payload).set('Authorization', `Bearer ${accessToken}`);
+      const response = await request(app)
+        .post('/books')
+        .send(payload)
+        .set('Authorization', `Bearer ${accessToken}`);
 
       // Assert
       const {

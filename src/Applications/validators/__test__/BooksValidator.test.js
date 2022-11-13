@@ -6,6 +6,8 @@ describe('BooksValidator interface', () => {
     const booksValidator = new BooksValidator();
 
     // Action and Assert
-    expect(booksValidator.validatePostBookPayload).toThrowError('BOOKS_VALIDATOR.METHOD_NOT_IMPLEMENTED');
+    expect(booksValidator.validatePostBookPayload).toThrowError(
+      'BOOKS_VALIDATOR.METHOD_NOT_IMPLEMENTED',
+    );
   });
 });

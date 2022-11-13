@@ -9,8 +9,9 @@ class UsersValidatorJoi extends UsersValidator {
   }
 
   validatePostUserPayload(payload) {
-    const validationResult = this.usersSchema.postUserPayloadSchema
-      .validate(payload, { abortEarly: false });
+    const validationResult = this.usersSchema.postUserPayloadSchema.validate(payload, {
+      abortEarly: false,
+    });
 
     if (validationResult.error) {
       ValidationErrorHandler(validationResult);
@@ -18,8 +19,9 @@ class UsersValidatorJoi extends UsersValidator {
   }
 
   validateGetUserByIdParams(params) {
-    const validationResult = this.usersSchema.getUserByIdParamsSchema
-      .validate(params, { abortEarly: false });
+    const validationResult = this.usersSchema.getUserByIdParamsSchema.validate(params, {
+      abortEarly: false,
+    });
 
     if (validationResult.error) {
       ValidationErrorHandler(validationResult);

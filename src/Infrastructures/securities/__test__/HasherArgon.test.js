@@ -31,9 +31,12 @@ describe('HasherArgon', () => {
       const encryptedPassword = await HasherHelper.hash(password);
 
       // Action and Assert
-      expect(hasherArgon.compare('plain_password2', encryptedPassword))
-        .rejects.toThrowError(AuthenticationError);
-      expect(spyHash).toBeCalledWith(encryptedPassword, 'plain_password2', { salt: process.env.SALT });
+      expect(hasherArgon.compare('plain_password2', encryptedPassword)).rejects.toThrowError(
+        AuthenticationError,
+      );
+      expect(spyHash).toBeCalledWith(encryptedPassword, 'plain_password2', {
+        salt: process.env.SALT,
+      });
     });
 
     it('should not throw AuthenticationError if string match', async () => {
@@ -44,8 +47,9 @@ describe('HasherArgon', () => {
       const encryptedPassword = await HasherHelper.hash(password);
 
       // Action and Assert
-      expect(hasherArgon.compare(password, encryptedPassword))
-        .resolves.not.toThrowError(AuthenticationError);
+      expect(hasherArgon.compare(password, encryptedPassword)).resolves.not.toThrowError(
+        AuthenticationError,
+      );
       expect(await hasherArgon.compare(password, encryptedPassword)).toEqual(undefined);
       expect(spyHash).toBeCalledWith(encryptedPassword, password, { salt: process.env.SALT });
     });

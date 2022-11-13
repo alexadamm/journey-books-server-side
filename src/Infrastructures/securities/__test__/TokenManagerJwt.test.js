@@ -54,8 +54,9 @@ describe('TokenManagerJwt', () => {
       const accessToken = await tokenManagerJwt.createAccessToken(payload);
 
       // Action and Assert
-      await expect(tokenManagerJwt.verifyRefreshToken(accessToken))
-        .rejects.toThrowError(InvariantError);
+      await expect(tokenManagerJwt.verifyRefreshToken(accessToken)).rejects.toThrowError(
+        InvariantError,
+      );
     });
     it('should not throw InvariantError when verification success', async () => {
       // Arrange
@@ -66,8 +67,9 @@ describe('TokenManagerJwt', () => {
       const refreshToken = await tokenManagerJwt.createRefreshToken(payload);
 
       // Action and Assert
-      await expect(tokenManagerJwt.verifyRefreshToken(refreshToken))
-        .resolves.not.toThrowError(InvariantError);
+      await expect(tokenManagerJwt.verifyRefreshToken(refreshToken)).resolves.not.toThrowError(
+        InvariantError,
+      );
     });
   });
 
@@ -84,8 +86,9 @@ describe('TokenManagerJwt', () => {
       const refreshToken = await tokenManagerJwt.createRefreshToken(payload);
 
       // Action and Assert
-      await expect(tokenManagerJwt.verifyAccessToken(refreshToken))
-        .rejects.toThrowError(AuthenticationError);
+      await expect(tokenManagerJwt.verifyAccessToken(refreshToken)).rejects.toThrowError(
+        AuthenticationError,
+      );
     });
     it('should not throw AuthenticationError when verification success', async () => {
       // Arrange
@@ -96,8 +99,9 @@ describe('TokenManagerJwt', () => {
       const accessToken = await tokenManagerJwt.createAccessToken(payload);
 
       // Action and Assert
-      await expect(tokenManagerJwt.verifyAccessToken(accessToken))
-        .resolves.not.toThrowError(AuthenticationError);
+      await expect(tokenManagerJwt.verifyAccessToken(accessToken)).resolves.not.toThrowError(
+        AuthenticationError,
+      );
     });
   });
 

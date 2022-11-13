@@ -8,15 +8,14 @@ class BooksRepositoryPostgres extends BooksRepository {
   }
 
   async addBook(newBook) {
-    const book = await this.pool.Book
-      .create({
-        data: newBook,
-        include: {
-          owner: {
-            select: { username: true },
-          },
+    const book = await this.pool.Book.create({
+      data: newBook,
+      include: {
+        owner: {
+          select: { username: true },
         },
-      });
+      },
+    });
 
     return new BookDetail({ ...book, owner: book.owner.username });
   }

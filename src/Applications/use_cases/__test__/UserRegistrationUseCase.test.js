@@ -26,15 +26,16 @@ describe('UserRegistrationUseCase', () => {
     const mockUsersRepository = new UsersRepository();
     const mockHasher = new Hasher();
 
-    mockUsersValidator.validatePostUserPayload = jest.fn()
-      .mockImplementation();
-    mockUsersRepository.verifyAvailableEmail = jest.fn()
+    mockUsersValidator.validatePostUserPayload = jest.fn().mockImplementation();
+    mockUsersRepository.verifyAvailableEmail = jest
+      .fn()
       .mockImplementation(() => Promise.resolve());
-    mockUsersRepository.verifyAvailableUsername = jest.fn()
+    mockUsersRepository.verifyAvailableUsername = jest
+      .fn()
       .mockImplementation(() => Promise.resolve());
-    mockHasher.hash = jest.fn()
-      .mockImplementation(() => Promise.resolve('encrypted_password'));
-    mockUsersRepository.addUser = jest.fn()
+    mockHasher.hash = jest.fn().mockImplementation(() => Promise.resolve('encrypted_password'));
+    mockUsersRepository.addUser = jest
+      .fn()
       .mockImplementation(() => Promise.resolve(expectedAddedUser));
 
     const userRegistrationUseCase = new UserRegistrationUseCase({
@@ -52,9 +53,11 @@ describe('UserRegistrationUseCase', () => {
     expect(mockUsersRepository.verifyAvailableEmail).toBeCalledWith(useCasePayload.email);
     expect(mockUsersRepository.verifyAvailableUsername).toBeCalledWith(useCasePayload.username);
     expect(mockHasher.hash).toBeCalledWith(useCasePayload.password);
-    expect(mockUsersRepository.addUser).toBeCalledWith(new NewUser({
-      ...useCasePayload,
-      password: 'encrypted_password',
-    }));
+    expect(mockUsersRepository.addUser).toBeCalledWith(
+      new NewUser({
+        ...useCasePayload,
+        password: 'encrypted_password',
+      }),
+    );
   });
 });

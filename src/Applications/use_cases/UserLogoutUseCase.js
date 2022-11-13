@@ -1,8 +1,5 @@
 class UserLogoutUseCase {
-  constructor({
-    authenticationsValidator,
-    authenticationsRepository,
-  }) {
+  constructor({ authenticationsValidator, authenticationsRepository }) {
     this.authenticationsValidator = authenticationsValidator;
     this.authenticationsRepository = authenticationsRepository;
   }

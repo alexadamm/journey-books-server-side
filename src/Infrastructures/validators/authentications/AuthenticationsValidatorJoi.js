@@ -9,8 +9,9 @@ class AuthenticationsValidatorJoi extends AuthenticationsValidator {
   }
 
   validatePostAuthenticationPayload(payload) {
-    const validationResult = this.authenticationsSchema.PostAuthenticationSchema
-      .validate(payload, { abortEarly: false });
+    const validationResult = this.authenticationsSchema.PostAuthenticationSchema.validate(payload, {
+      abortEarly: false,
+    });
 
     if (validationResult.error) {
       ValidationErrorHandler(validationResult);
@@ -18,8 +19,10 @@ class AuthenticationsValidatorJoi extends AuthenticationsValidator {
   }
 
   validateDeleteAuthenticationPayload(payload) {
-    const validationResult = this.authenticationsSchema.DeleteAuthenticationSchema
-      .validate(payload, { abortEarly: false });
+    const validationResult = this.authenticationsSchema.DeleteAuthenticationSchema.validate(
+      payload,
+      { abortEarly: false },
+    );
 
     if (validationResult.error) {
       ValidationErrorHandler(validationResult);
@@ -27,8 +30,9 @@ class AuthenticationsValidatorJoi extends AuthenticationsValidator {
   }
 
   validatePutAuthenticationPayload(payload) {
-    const validationResult = this.authenticationsSchema.PutAuthenticationSchema
-      .validate(payload, { abortEarly: false });
+    const validationResult = this.authenticationsSchema.PutAuthenticationSchema.validate(payload, {
+      abortEarly: false,
+    });
 
     if (validationResult.error) {
       ValidationErrorHandler(validationResult);
