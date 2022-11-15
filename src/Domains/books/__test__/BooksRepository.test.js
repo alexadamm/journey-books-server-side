@@ -9,5 +9,23 @@ describe('BooksRepository interface', () => {
     expect(booksRepository.addBook('')).rejects.toThrowError(
       'BOOKS_REPOSITORY.METHOD_NOT_IMPLEMENTED',
     );
+    expect(booksRepository.addBook('')).rejects.toThrowError(
+      'BOOKS_REPOSITORY.METHOD_NOT_IMPLEMENTED',
+    );
+    expect(booksRepository.getBooksByUserId('')).rejects.toThrowError(
+      'BOOKS_REPOSITORY.METHOD_NOT_IMPLEMENTED',
+    );
+    expect(booksRepository.verifyBookAccessbility('', '')).rejects.toThrowError(
+      'BOOKS_REPOSITORY.METHOD_NOT_IMPLEMENTED',
+    );
+    expect(booksRepository.getBookById('')).rejects.toThrowError(
+      'BOOKS_REPOSITORY.METHOD_NOT_IMPLEMENTED',
+    );
+    expect(booksRepository.updateBookById('', {})).rejects.toThrowError(
+      'BOOKS_REPOSITORY.METHOD_NOT_IMPLEMENTED',
+    );
+    expect(booksRepository.deleteBookById('')).rejects.toThrowError(
+      'BOOKS_REPOSITORY.METHOD_NOT_IMPLEMENTED',
+    );
   });
 });
