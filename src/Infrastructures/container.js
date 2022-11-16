@@ -25,6 +25,10 @@ const BooksValidator = require('../Applications/validators/BooksValidator');
 const BooksValidatorJoi = require('./validators/books/BooksValidatorJoi');
 const RefreshAuthenticationUseCase = require('../Applications/use_cases/RefreshAuthenticationUseCase');
 const UserLogoutUseCase = require('../Applications/use_cases/UserLogoutUseCase');
+const GetBooksUseCase = require('../Applications/use_cases/GetBooksUseCase');
+const GetBookByIdUseCase = require('../Applications/use_cases/GetBookByIdUseCase');
+const UpdateBookByIdUseCase = require('../Applications/use_cases/UpdateBookByIdUseCase');
+const DeleteBookByIdUseCase = require('../Applications/use_cases/DeleteBookByIdUseCase');
 
 // creating container
 const container = createContainer();
@@ -176,6 +180,70 @@ container.register([
   {
     key: AddBookUseCase.name,
     Class: AddBookUseCase,
+    parameter: {
+      injectType: 'destructuring',
+      dependencies: [
+        {
+          name: 'booksValidator',
+          internal: BooksValidator.name,
+        },
+        {
+          name: 'booksRepository',
+          internal: BooksRepository.name,
+        },
+      ],
+    },
+  },
+  {
+    key: GetBooksUseCase.name,
+    Class: GetBooksUseCase,
+    parameter: {
+      injectType: 'destructuring',
+      dependencies: [
+        {
+          name: 'booksRepository',
+          internal: BooksRepository.name,
+        },
+      ],
+    },
+  },
+  {
+    key: GetBookByIdUseCase.name,
+    Class: GetBookByIdUseCase,
+    parameter: {
+      injectType: 'destructuring',
+      dependencies: [
+        {
+          name: 'booksValidator',
+          internal: BooksValidator.name,
+        },
+        {
+          name: 'booksRepository',
+          internal: BooksRepository.name,
+        },
+      ],
+    },
+  },
+  {
+    key: UpdateBookByIdUseCase.name,
+    Class: UpdateBookByIdUseCase,
+    parameter: {
+      injectType: 'destructuring',
+      dependencies: [
+        {
+          name: 'booksValidator',
+          internal: BooksValidator.name,
+        },
+        {
+          name: 'booksRepository',
+          internal: BooksRepository.name,
+        },
+      ],
+    },
+  },
+  {
+    key: DeleteBookByIdUseCase.name,
+    Class: DeleteBookByIdUseCase,
     parameter: {
       injectType: 'destructuring',
       dependencies: [

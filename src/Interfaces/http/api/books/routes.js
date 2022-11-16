@@ -8,6 +8,10 @@ const books = (container) => {
   const { authenticationHandler } = new ServerMiddlewares(container);
 
   booksRouter.post('/', authenticationHandler, booksController.postBookController);
+  booksRouter.get('/', authenticationHandler, booksController.getBooksController);
+  booksRouter.get('/:bookId/', authenticationHandler, booksController.getBookByIdController);
+  booksRouter.put('/:bookId/', authenticationHandler, booksController.putBookByIdController);
+  booksRouter.delete('/:bookId/', authenticationHandler, booksController.deleteBookByIdController);
 
   return booksRouter;
 };
