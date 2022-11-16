@@ -1,6 +1,10 @@
 const BooksSchema = (joi) => ({
-  PostBookSchema: joi.object({
+  BookPayloadSchema: joi.object({
     title: joi.string().required(),
+  }),
+
+  BookIdSchema: joi.object({
+    bookId: joi.string().uuid().required(),
   }),
 });
 

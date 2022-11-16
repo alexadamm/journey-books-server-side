@@ -9,5 +9,17 @@ describe('BooksValidator interface', () => {
     expect(booksValidator.validatePostBookPayload).toThrowError(
       'BOOKS_VALIDATOR.METHOD_NOT_IMPLEMENTED',
     );
+
+    expect(booksValidator.validateGetBookByIdParams).toThrowError(
+      'BOOKS_VALIDATOR.METHOD_NOT_IMPLEMENTED',
+    );
+
+    expect(booksValidator.validatePutBookByIdReq).toThrowError(
+      'BOOKS_VALIDATOR.METHOD_NOT_IMPLEMENTED',
+    );
+
+    expect(booksValidator.validateDeleteBookByIdParams).toThrowError(
+      'BOOKS_VALIDATOR.METHOD_NOT_IMPLEMENTED',
+    );
   });
 });

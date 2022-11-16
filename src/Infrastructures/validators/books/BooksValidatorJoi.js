@@ -9,7 +9,45 @@ class BooksValidatorJoi extends BooksValidator {
   }
 
   validatePostBookPayload(payload) {
-    const validationResult = this.booksSchema.PostBookSchema.validate(payload, {
+    const validationResult = this.booksSchema.BookPayloadSchema.validate(payload, {
+      abortEarly: false,
+    });
+
+    if (validationResult.error) {
+      ValidationErrorHandler(validationResult);
+    }
+  }
+
+  validateGetBookByIdParams(params) {
+    const validationResult = this.booksSchema.BookIdSchema.validate(params, {
+      abortEarly: false,
+    });
+
+    if (validationResult.error) {
+      ValidationErrorHandler(validationResult);
+    }
+  }
+
+  validatePutBookByIdReq(params, payload) {
+    const validationResult = this.booksSchema.BookIdSchema.validate(params, {
+      abortEarly: false,
+    });
+
+    if (validationResult.error) {
+      ValidationErrorHandler(validationResult);
+    }
+
+    const validationResult2 = this.booksSchema.BookPayloadSchema.validate(payload, {
+      abortEarly: false,
+    });
+
+    if (validationResult2.error) {
+      ValidationErrorHandler(validationResult2);
+    }
+  }
+
+  validateDeleteBookByIdParams(params) {
+    const validationResult = this.booksSchema.BookIdSchema.validate(params, {
       abortEarly: false,
     });
 
