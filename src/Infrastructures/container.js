@@ -29,6 +29,14 @@ const GetBooksUseCase = require('../Applications/use_cases/GetBooksUseCase');
 const GetBookByIdUseCase = require('../Applications/use_cases/GetBookByIdUseCase');
 const UpdateBookByIdUseCase = require('../Applications/use_cases/UpdateBookByIdUseCase');
 const DeleteBookByIdUseCase = require('../Applications/use_cases/DeleteBookByIdUseCase');
+const AddBookComponentUseCase = require('../Applications/use_cases/AddBookComponentUseCase');
+const BookComponentsValidator = require('../Applications/validators/BookComponentsValidator');
+const BookComponentsValidatorJoi = require('./validators/book_components/BookComponentsValidatorJoi');
+const BookComponentsRepository = require('../Domains/book_components/BookComponentsRepository');
+const BookComponentsRepositoryPostgres = require('./repositories/postgres/BookComponentsRepositoryPostgres');
+const GetBookComponentByIdUseCase = require('../Applications/use_cases/GetBookComponentByIdUseCase');
+const UpdateBookComponentUseCase = require('../Applications/use_cases/UpdateBookComponentUseCase');
+const DeleteBookComponentByIdUseCase = require('../Applications/use_cases/DeleteBookComponentByIdUseCase');
 
 // creating container
 const container = createContainer();
@@ -91,6 +99,17 @@ container.register([
     },
   },
   {
+    key: BookComponentsValidator.name,
+    Class: BookComponentsValidatorJoi,
+    parameter: {
+      dependencies: [
+        {
+          concrete: Joi,
+        },
+      ],
+    },
+  },
+  {
     key: UsersRepository.name,
     Class: UsersRepositoryPostgres,
     parameter: {
@@ -115,6 +134,17 @@ container.register([
   {
     key: BooksRepository.name,
     Class: BooksRepositoryPostgres,
+    parameter: {
+      dependencies: [
+        {
+          concrete: pool,
+        },
+      ],
+    },
+  },
+  {
+    key: BookComponentsRepository.name,
+    Class: BookComponentsRepositoryPostgres,
     parameter: {
       dependencies: [
         {
@@ -195,6 +225,27 @@ container.register([
     },
   },
   {
+    key: AddBookComponentUseCase.name,
+    Class: AddBookComponentUseCase,
+    parameter: {
+      injectType: 'destructuring',
+      dependencies: [
+        {
+          name: 'bookComponentsValidator',
+          internal: BookComponentsValidator.name,
+        },
+        {
+          name: 'bookComponentsRepository',
+          internal: BookComponentsRepository.name,
+        },
+        {
+          name: 'booksRepository',
+          internal: BooksRepository.name,
+        },
+      ],
+    },
+  },
+  {
     key: GetBooksUseCase.name,
     Class: GetBooksUseCase,
     parameter: {
@@ -225,6 +276,27 @@ container.register([
     },
   },
   {
+    key: GetBookComponentByIdUseCase.name,
+    Class: GetBookComponentByIdUseCase,
+    parameter: {
+      injectType: 'destructuring',
+      dependencies: [
+        {
+          name: 'bookComponentsValidator',
+          internal: BookComponentsValidator.name,
+        },
+        {
+          name: 'bookComponentsRepository',
+          internal: BookComponentsRepository.name,
+        },
+        {
+          name: 'booksRepository',
+          internal: BooksRepository.name,
+        },
+      ],
+    },
+  },
+  {
     key: UpdateBookByIdUseCase.name,
     Class: UpdateBookByIdUseCase,
     parameter: {
@@ -242,6 +314,27 @@ container.register([
     },
   },
   {
+    key: UpdateBookComponentUseCase.name,
+    Class: UpdateBookComponentUseCase,
+    parameter: {
+      injectType: 'destructuring',
+      dependencies: [
+        {
+          name: 'bookComponentsValidator',
+          internal: BookComponentsValidator.name,
+        },
+        {
+          name: 'bookComponentsRepository',
+          internal: BookComponentsRepository.name,
+        },
+        {
+          name: 'booksRepository',
+          internal: BooksRepository.name,
+        },
+      ],
+    },
+  },
+  {
     key: DeleteBookByIdUseCase.name,
     Class: DeleteBookByIdUseCase,
     parameter: {
@@ -250,6 +343,27 @@ container.register([
         {
           name: 'booksValidator',
           internal: BooksValidator.name,
+        },
+        {
+          name: 'booksRepository',
+          internal: BooksRepository.name,
+        },
+      ],
+    },
+  },
+  {
+    key: DeleteBookComponentByIdUseCase.name,
+    Class: DeleteBookComponentByIdUseCase,
+    parameter: {
+      injectType: 'destructuring',
+      dependencies: [
+        {
+          name: 'bookComponentsValidator',
+          internal: BookComponentsValidator.name,
+        },
+        {
+          name: 'bookComponentsRepository',
+          internal: BookComponentsRepository.name,
         },
         {
           name: 'booksRepository',

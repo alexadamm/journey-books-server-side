@@ -6,7 +6,10 @@ const BooksTableHelper = {
     return pool.Book.findMany({ where: { ownerId } });
   },
 
-  async addBook({ ownerId = '12345678-abcd-abcd-abcd-123456789012', title = 'A title' }) {
+  async addBook({ id, ownerId = '12345678-abcd-abcd-abcd-123456789012', title = 'A title' }) {
+    if (id) {
+      return pool.Book.create({ data: { id, ownerId, title } });
+    }
     return pool.Book.create({ data: { ownerId, title } });
   },
 
