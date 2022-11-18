@@ -6,6 +6,7 @@ const authentications = require('../../Interfaces/http/api/authentications/route
 
 const ServerMiddlewares = require('./middlewares');
 const books = require('../../Interfaces/http/api/books/routes');
+const bookComponents = require('../../Interfaces/http/api/book_components/routes');
 
 const createServer = async (container) => {
   const app = express();
@@ -19,6 +20,7 @@ const createServer = async (container) => {
   app.use('/users', users(container));
   app.use('/authentications', authentications(container));
   app.use('/books', books(container));
+  app.use('/books', bookComponents(container));
   app.get('/', async (req, res) => {
     res.status(200).json({
       isSuccess: true,
