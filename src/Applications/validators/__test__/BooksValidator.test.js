@@ -6,19 +6,19 @@ describe('BooksValidator interface', () => {
     const booksValidator = new BooksValidator();
 
     // Action and Assert
-    expect(booksValidator.validatePostBookPayload).toThrowError(
+    expect(() => booksValidator.validatePostBookPayload({})).toThrowError(
       'BOOKS_VALIDATOR.METHOD_NOT_IMPLEMENTED',
     );
 
-    expect(booksValidator.validateGetBookByIdParams).toThrowError(
+    expect(() => booksValidator.validateGetBookByIdParams({})).toThrowError(
       'BOOKS_VALIDATOR.METHOD_NOT_IMPLEMENTED',
     );
 
-    expect(booksValidator.validatePutBookByIdReq).toThrowError(
+    expect(() => booksValidator.validatePutBookByIdReq({}, {})).toThrowError(
       'BOOKS_VALIDATOR.METHOD_NOT_IMPLEMENTED',
     );
 
-    expect(booksValidator.validateDeleteBookByIdParams).toThrowError(
+    expect(() => booksValidator.validateDeleteBookByIdParams({})).toThrowError(
       'BOOKS_VALIDATOR.METHOD_NOT_IMPLEMENTED',
     );
   });

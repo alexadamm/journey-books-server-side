@@ -1,5 +1,4 @@
 const argon2 = require('argon2');
-
 const HasherHelper = require('../../../../tests/HasherHelper');
 const AuthenticationError = require('../../../Commons/exceptions/AuthenticationError');
 const HasherArgon = require('../HasherArgon');

@@ -15,21 +15,24 @@ describe('GetBookByIdUseCase', () => {
       id: '12345678-abcd-abcd-abcd-123456789013',
       title: 'My Journey',
       owner: 'johndoe',
-      components: [{
-        id: '12345678-abcd-abcd-abcd-123456789011',
-        content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-      }],
+      components: [
+        {
+          id: '12345678-abcd-abcd-abcd-123456789011',
+          content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+        },
+      ],
       createdAt: '2021-08-08T07:26:17.000Z',
     });
 
     const mockBooksValidator = new BooksValidator();
     const mockBooksRepository = new BooksRepository();
 
-    mockBooksValidator.validateGetBookByIdParams = jest.fn()
-      .mockImplementation(() => undefined);
-    mockBooksRepository.getBookById = jest.fn()
+    mockBooksValidator.validateGetBookByIdParams = jest.fn().mockImplementation(() => undefined);
+    mockBooksRepository.getBookById = jest
+      .fn()
       .mockImplementation(() => Promise.resolve(expectedBook));
-    mockBooksRepository.verifyBookAccessbility = jest.fn()
+    mockBooksRepository.verifyBookAccessbility = jest
+      .fn()
       .mockImplementation(() => Promise.resolve());
 
     const getBookByIdUseCase = new GetBookByIdUseCase({

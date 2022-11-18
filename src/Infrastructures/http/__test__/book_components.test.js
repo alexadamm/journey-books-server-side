@@ -130,6 +130,67 @@ describe('/books/{bookId}/components endpoint', () => {
       expect(response.body.errors.longitude).toContain('"longitude" must be a string');
       expect(response.body.errors.latitude).toContain('"latitude" must be a string');
     });
+
+    it('should response 404 when book not found', async () => {
+      // Arrange
+      const app = await createServer(container);
+
+      const { accessToken } = await ServerTestHelper.newUser(
+        { request, app },
+        { username: 'johndoe' },
+      );
+      const bookId = '12345678-abcd-abcd-abcd-123456789012';
+
+      const payload = {
+        content: 'Lorem ipsum',
+        longitude: '123.123',
+        latitude: '-123.123',
+      };
+
+      // Action
+      const response = await request(app)
+        .post(`/books/${bookId}/components`)
+        .send(payload)
+        .set('Authorization', `Bearer ${accessToken}`);
+
+      // Assert
+      expect(response.statusCode).toEqual(404);
+      expect(response.body.isSuccess).toEqual(false);
+    });
+
+    it('should response 403 when try to post to unaccessible book', async () => {
+      // Arrange
+      const app = await createServer(container);
+
+      const { userId } = await ServerTestHelper.newUser(
+        { request, app },
+        { username: 'johndoe' },
+      );
+      const { id: bookId } = await BooksTableHelper.addBook({
+        ownerId: userId,
+        title: 'First Book',
+      });
+      const { accessToken } = await ServerTestHelper.newUser(
+        { request, app },
+        { username: 'foo', email: 'foo@journeymail.com' },
+      );
+
+      const payload = {
+        content: 'Lorem ipsum',
+        longitude: '123.123',
+        latitude: '-123.123',
+      };
+
+      // Action
+      const response = await request(app)
+        .post(`/books/${bookId}/components`)
+        .send(payload)
+        .set('Authorization', `Bearer ${accessToken}`);
+
+      // Assert
+      expect(response.statusCode).toEqual(403);
+      expect(response.body.isSuccess).toEqual(false);
+    });
   });
 
   describe('when GET /books/{bookId}/components/{componentId}', () => {
@@ -213,6 +274,101 @@ describe('/books/{bookId}/components endpoint', () => {
 
       // Assert
       expect(response.statusCode).toEqual(400);
+      expect(response.body.isSuccess).toEqual(false);
+    });
+
+    it('should response 404 when book not found', async () => {
+      // Arrange
+      const app = await createServer(container);
+
+      const { userId, accessToken } = await ServerTestHelper.newUser(
+        { request, app },
+        { username: 'johndoe' },
+      );
+
+      const { id } = await BooksTableHelper.addBook({
+        ownerId: userId,
+        title: 'First Book',
+      });
+
+      const { id: componentId } = await BookComponentsTableHelper.addComponent({
+        bookId: id,
+        content: 'Lorem ipsum',
+        longitude: '123.123',
+        latitude: '-123.123',
+      });
+
+      const bookId = '12345678-abcd-abcd-abcd-123456789012';
+
+      // Action
+      const response = await request(app)
+        .get(`/books/${bookId}/components/${componentId}`)
+        .set('Authorization', `Bearer ${accessToken}`);
+
+      // Assert
+      expect(response.statusCode).toEqual(404);
+      expect(response.body.isSuccess).toEqual(false);
+    });
+
+    it('should response 404 when component not found', async () => {
+      // Arrange
+      const app = await createServer(container);
+
+      const { userId, accessToken } = await ServerTestHelper.newUser(
+        { request, app },
+        { username: 'johndoe' },
+      );
+
+      const { id: bookId } = await BooksTableHelper.addBook({
+        ownerId: userId,
+        title: 'First Book',
+      });
+
+      const componentId = '12345678-abcd-abcd-abcd-123456789012';
+
+      // Action
+      const response = await request(app)
+        .get(`/books/${bookId}/components/${componentId}`)
+        .set('Authorization', `Bearer ${accessToken}`);
+
+      // Assert
+      expect(response.statusCode).toEqual(404);
+      expect(response.body.isSuccess).toEqual(false);
+    });
+
+    it('should response 403 when try to get unaccessible book component', async () => {
+      // Arrange
+      const app = await createServer(container);
+
+      const { userId } = await ServerTestHelper.newUser(
+        { request, app },
+        { username: 'johndoe' },
+      );
+
+      const { id: bookId } = await BooksTableHelper.addBook({
+        ownerId: userId,
+        title: 'First Book',
+      });
+
+      const { id: componentId } = await BookComponentsTableHelper.addComponent({
+        bookId,
+        content: 'Lorem ipsum',
+        longitude: '123.123',
+        latitude: '-123.123',
+      });
+
+      const { accessToken } = await ServerTestHelper.newUser(
+        { request, app },
+        { username: 'foo', email: 'foo@journeymail.com' },
+      );
+
+      // Action
+      const response = await request(app)
+        .get(`/books/${bookId}/components/${componentId}`)
+        .set('Authorization', `Bearer ${accessToken}`);
+
+      // Assert
+      expect(response.statusCode).toEqual(403);
       expect(response.body.isSuccess).toEqual(false);
     });
   });
@@ -417,6 +573,101 @@ describe('/books/{bookId}/components endpoint', () => {
       expect(response.statusCode).toEqual(401);
       expect(response.body.isSuccess).toEqual(false);
       expect(response.body.errors.message).toEqual('No token provided');
+    });
+
+    it('should response 404 when book not found', async () => {
+      // Arrange
+      const app = await createServer(container);
+
+      const { userId, accessToken } = await ServerTestHelper.newUser(
+        { request, app },
+        { username: 'johndoe' },
+      );
+
+      const { id } = await BooksTableHelper.addBook({
+        ownerId: userId,
+        title: 'First Book',
+      });
+
+      const { id: componentId } = await BookComponentsTableHelper.addComponent({
+        bookId: id,
+        content: 'Lorem ipsum',
+        longitude: '123.123',
+        latitude: '-123.123',
+      });
+
+      const bookId = '12345678-abcd-abcd-abcd-123456789012';
+
+      // Action
+      const response = await request(app)
+        .delete(`/books/${bookId}/components/${componentId}`)
+        .set('Authorization', `Bearer ${accessToken}`);
+
+      // Assert
+      expect(response.statusCode).toEqual(404);
+      expect(response.body.isSuccess).toEqual(false);
+    });
+
+    it('should response 404 when component not found', async () => {
+      // Arrange
+      const app = await createServer(container);
+
+      const { userId, accessToken } = await ServerTestHelper.newUser(
+        { request, app },
+        { username: 'johndoe' },
+      );
+
+      const { id: bookId } = await BooksTableHelper.addBook({
+        ownerId: userId,
+        title: 'First Book',
+      });
+
+      const componentId = '12345678-abcd-abcd-abcd-123456789012';
+
+      // Action
+      const response = await request(app)
+        .delete(`/books/${bookId}/components/${componentId}`)
+        .set('Authorization', `Bearer ${accessToken}`);
+
+      // Assert
+      expect(response.statusCode).toEqual(404);
+      expect(response.body.isSuccess).toEqual(false);
+    });
+
+    it('should response 403 when try to delete unaccessible book component', async () => {
+      // Arrange
+      const app = await createServer(container);
+
+      const { userId } = await ServerTestHelper.newUser(
+        { request, app },
+        { username: 'johndoe' },
+      );
+
+      const { id: bookId } = await BooksTableHelper.addBook({
+        ownerId: userId,
+        title: 'First Book',
+      });
+
+      const { id: componentId } = await BookComponentsTableHelper.addComponent({
+        bookId,
+        content: 'Lorem ipsum',
+        longitude: '123.123',
+        latitude: '-123.123',
+      });
+
+      const { accessToken } = await ServerTestHelper.newUser(
+        { request, app },
+        { username: 'foo', email: 'foo@journeymail.com' },
+      );
+
+      // Action
+      const response = await request(app)
+        .delete(`/books/${bookId}/components/${componentId}`)
+        .set('Authorization', `Bearer ${accessToken}`);
+
+      // Assert
+      expect(response.statusCode).toEqual(403);
+      expect(response.body.isSuccess).toEqual(false);
     });
   });
 });

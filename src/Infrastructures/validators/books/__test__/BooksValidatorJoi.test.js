@@ -1,5 +1,4 @@
 const Joi = require('joi');
-
 const InvariantError = require('../../../../Commons/exceptions/InvariantError');
 const BooksValidatorJoi = require('../BooksValidatorJoi');
 
@@ -12,7 +11,8 @@ describe('BooksValidatorJoi', () => {
       const booksValidator = new BooksValidatorJoi(Joi);
 
       // Action and Assert
-      expect(() => booksValidator.validatePostBookPayload(payload)).toThrowError(InvariantError);
+      expect(() => booksValidator.validatePostBookPayload(payload))
+        .toThrowError(InvariantError);
     });
 
     it('should throw InvariantError when payload did not meet data type specification', () => {
@@ -24,7 +24,8 @@ describe('BooksValidatorJoi', () => {
       const booksValidator = new BooksValidatorJoi(Joi);
 
       // Action and Assert
-      expect(() => booksValidator.validatePostBookPayload(payload)).toThrowError(InvariantError);
+      expect(() => booksValidator.validatePostBookPayload(payload))
+        .toThrowError(InvariantError);
     });
 
     it('should not throw InvariantError when payload validated successfully', () => {
@@ -36,9 +37,8 @@ describe('BooksValidatorJoi', () => {
       const booksValidator = new BooksValidatorJoi(Joi);
 
       // Action and Assert
-      expect(() => booksValidator.validatePostBookPayload(payload)).not.toThrowError(
-        InvariantError,
-      );
+      expect(() => booksValidator.validatePostBookPayload(payload))
+        .not.toThrowError(InvariantError);
     });
   });
 
@@ -50,7 +50,8 @@ describe('BooksValidatorJoi', () => {
       const booksValidator = new BooksValidatorJoi(Joi);
 
       // Action and Assert
-      expect(() => booksValidator.validateGetBookByIdParams(params)).toThrowError(InvariantError);
+      expect(() => booksValidator.validateGetBookByIdParams(params))
+        .toThrowError(InvariantError);
     });
 
     it('should throw InvariantError when params did not meet data type specification', () => {
@@ -62,7 +63,8 @@ describe('BooksValidatorJoi', () => {
       const booksValidator = new BooksValidatorJoi(Joi);
 
       // Action and Assert
-      expect(() => booksValidator.validateGetBookByIdParams(params)).toThrowError(InvariantError);
+      expect(() => booksValidator.validateGetBookByIdParams(params))
+        .toThrowError(InvariantError);
     });
 
     it('should not throw InvariantError when params validated successfully', () => {
@@ -74,9 +76,8 @@ describe('BooksValidatorJoi', () => {
       const booksValidator = new BooksValidatorJoi(Joi);
 
       // Action and Assert
-      expect(() => booksValidator.validateGetBookByIdParams(params)).not.toThrowError(
-        InvariantError,
-      );
+      expect(() => booksValidator.validateGetBookByIdParams(params))
+        .not.toThrowError(InvariantError);
     });
   });
 
@@ -91,9 +92,8 @@ describe('BooksValidatorJoi', () => {
       const booksValidator = new BooksValidatorJoi(Joi);
 
       // Action and Assert
-      expect(() => booksValidator.validatePutBookByIdReq(params, payload)).toThrowError(
-        InvariantError,
-      );
+      expect(() => booksValidator.validatePutBookByIdReq(params, payload))
+        .toThrowError(InvariantError);
     });
 
     it('should throw InvariantError when params did not meet data type specification', () => {
@@ -108,9 +108,8 @@ describe('BooksValidatorJoi', () => {
       const booksValidator = new BooksValidatorJoi(Joi);
 
       // Action and Assert
-      expect(() => booksValidator.validatePutBookByIdReq(params, payload)).toThrowError(
-        InvariantError,
-      );
+      expect(() => booksValidator.validatePutBookByIdReq(params, payload))
+        .toThrowError(InvariantError);
     });
 
     it('should throw InvariantError when payload not contain needed property', () => {
@@ -123,9 +122,8 @@ describe('BooksValidatorJoi', () => {
       const booksValidator = new BooksValidatorJoi(Joi);
 
       // Action and Assert
-      expect(() => booksValidator.validatePutBookByIdReq(params, payload)).toThrowError(
-        InvariantError,
-      );
+      expect(() => booksValidator.validatePutBookByIdReq(params, payload))
+        .toThrowError(InvariantError);
     });
 
     it('should throw InvariantError when payload did not meet data type specification', () => {
@@ -140,9 +138,8 @@ describe('BooksValidatorJoi', () => {
       const booksValidator = new BooksValidatorJoi(Joi);
 
       // Action and Assert
-      expect(() => booksValidator.validatePutBookByIdReq(params, payload)).toThrowError(
-        InvariantError,
-      );
+      expect(() => booksValidator.validatePutBookByIdReq(params, payload))
+        .toThrowError(InvariantError);
     });
 
     it('should not throw InvariantError when params and payload validated successfully', () => {
@@ -157,9 +154,8 @@ describe('BooksValidatorJoi', () => {
       const booksValidator = new BooksValidatorJoi(Joi);
 
       // Action and Assert
-      expect(() => booksValidator.validatePutBookByIdReq(params, payload)).not.toThrowError(
-        InvariantError,
-      );
+      expect(() => booksValidator.validatePutBookByIdReq(params, payload))
+        .not.toThrowError(InvariantError);
     });
   });
 
@@ -171,9 +167,8 @@ describe('BooksValidatorJoi', () => {
       const booksValidator = new BooksValidatorJoi(Joi);
 
       // Action and Assert
-      expect(() => booksValidator.validateDeleteBookByIdParams(params)).toThrowError(
-        InvariantError,
-      );
+      expect(() => booksValidator.validateDeleteBookByIdParams(params))
+        .toThrowError(InvariantError);
     });
 
     it('should throw InvariantError when params did not meet data type specification', () => {
@@ -185,9 +180,8 @@ describe('BooksValidatorJoi', () => {
       const booksValidator = new BooksValidatorJoi(Joi);
 
       // Action and Assert
-      expect(() => booksValidator.validateDeleteBookByIdParams(params)).toThrowError(
-        InvariantError,
-      );
+      expect(() => booksValidator.validateDeleteBookByIdParams(params))
+        .toThrowError(InvariantError);
     });
 
     it('should not throw InvariantError when params validated successfully', () => {
@@ -199,9 +193,8 @@ describe('BooksValidatorJoi', () => {
       const booksValidator = new BooksValidatorJoi(Joi);
 
       // Action and Assert
-      expect(() => booksValidator.validateDeleteBookByIdParams(params)).not.toThrowError(
-        InvariantError,
-      );
+      expect(() => booksValidator.validateDeleteBookByIdParams(params))
+        .not.toThrowError(InvariantError);
     });
   });
 });

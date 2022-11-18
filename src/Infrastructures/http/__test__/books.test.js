@@ -1,7 +1,5 @@
-const { when, isRef } = require('joi');
 const request = require('supertest');
 const BooksTableHelper = require('../../../../tests/BooksTableHelper');
-
 const DatabaseHelper = require('../../../../tests/DatabaseHelper');
 const ServerTestHelper = require('../../../../tests/ServerTestHelper');
 const container = require('../../container');
@@ -58,8 +56,7 @@ describe('/books endpoint', () => {
 
     it('should response 400 when payload not contain needed properties', async () => {
       // Arrange
-      const payload = {
-      };
+      const payload = {};
       const app = await createServer(container);
       const { accessToken } = await ServerTestHelper.newUser(
         { request, app },
@@ -163,6 +160,73 @@ describe('/books endpoint', () => {
       expect(response.body.isSuccess).toEqual(true);
       expect(response.body.data.book.title).toEqual('First Book');
     });
+
+    it('should throw 401 when auth token not provided', async () => {
+      // Arrange
+      const app = await createServer(container);
+      const { userId } = await ServerTestHelper.newUser(
+        { request, app },
+        { username: 'johndoe' },
+      );
+      const { id: bookId } = await BooksTableHelper.addBook({
+        ownerId: userId,
+        title: 'First Book',
+      });
+
+      // Action
+      const response = await request(app)
+        .get(`/books/${bookId}`);
+
+      // Assert
+      expect(response.statusCode).toEqual(401);
+      expect(response.body.isSuccess).toEqual(false);
+      expect(response.body.errors.message).toEqual('No token provided');
+    });
+
+    it('should response 404 when book not found', async () => {
+      // Arrange
+      const app = await createServer(container);
+      const { accessToken } = await ServerTestHelper.newUser(
+        { request, app },
+        { username: 'johndoe' },
+      );
+      const bookId = '12345678-abcd-abcd-abcd-123456789012';
+
+      // Action
+      const response = await request(app)
+        .get(`/books/${bookId}`)
+        .set('Authorization', `Bearer ${accessToken}`);
+
+      // Assert
+      expect(response.statusCode).toEqual(404);
+      expect(response.body.isSuccess).toEqual(false);
+    });
+
+    it('should respone 403 when try to unaccessible book', async () => {
+      // Arrange
+      const app = await createServer(container);
+      const { userId } = await ServerTestHelper.newUser(
+        { request, app },
+        { username: 'johndoe' },
+      );
+      const { id: bookId } = await BooksTableHelper.addBook({
+        ownerId: userId,
+        title: 'First Book',
+      });
+      const { accessToken } = await ServerTestHelper.newUser(
+        { request, app },
+        { username: 'foo', email: 'foo@journeymail.com' },
+      );
+
+      // Action
+      const response = await request(app)
+        .get(`/books/${bookId}`)
+        .set('Authorization', `Bearer ${accessToken}`);
+
+      // Assert
+      expect(response.statusCode).toEqual(403);
+      expect(response.body.isSuccess).toEqual(false);
+    });
   });
 
   describe('when PUT /books/{bookId}', () => {
@@ -194,10 +258,7 @@ describe('/books endpoint', () => {
       // Arrange
       const app = await createServer(container);
 
-      const { userId } = await ServerTestHelper.newUser(
-        { request, app },
-        { username: 'johndoe' },
-      );
+      const { userId } = await ServerTestHelper.newUser({ request, app }, { username: 'johndoe' });
       const { id: bookId } = await BooksTableHelper.addBook({
         ownerId: userId,
         title: 'First Book',
@@ -259,6 +320,53 @@ describe('/books endpoint', () => {
       expect(response.body.isSuccess).toEqual(false);
       expect(response.body.errors.title).toContain('"title" must be a string');
     });
+
+    it('should response 404 when book not found', async () => {
+      // Arrange
+      const app = await createServer(container);
+      const { accessToken } = await ServerTestHelper.newUser(
+        { request, app },
+        { username: 'johndoe' },
+      );
+      const bookId = '12345678-abcd-abcd-abcd-123456789012';
+
+      // Action
+      const response = await request(app)
+        .put(`/books/${bookId}`)
+        .send({ title: 'Updated Book' })
+        .set('Authorization', `Bearer ${accessToken}`);
+
+      // Assert
+      expect(response.statusCode).toEqual(404);
+      expect(response.body.isSuccess).toEqual(false);
+    });
+
+    it('should response 403 when try to edit unaccessible book', async () => {
+      // Arrange
+      const app = await createServer(container);
+      const { userId } = await ServerTestHelper.newUser(
+        { request, app },
+        { username: 'johndoe' },
+      );
+      const { id: bookId } = await BooksTableHelper.addBook({
+        ownerId: userId,
+        title: 'First Book',
+      });
+      const { accessToken } = await ServerTestHelper.newUser(
+        { request, app },
+        { username: 'foo', email: 'foo@journeymail.com' },
+      );
+
+      // Action
+      const response = await request(app)
+        .put(`/books/${bookId}`)
+        .send({ title: 'Updated Book' })
+        .set('Authorization', `Bearer ${accessToken}`);
+
+      // Assert
+      expect(response.statusCode).toEqual(403);
+      expect(response.body.isSuccess).toEqual(false);
+    });
   });
 
   describe('when DELETE /books/{bookId}', () => {
@@ -289,10 +397,7 @@ describe('/books endpoint', () => {
       // Arrange
       const app = await createServer(container);
 
-      const { userId } = await ServerTestHelper.newUser(
-        { request, app },
-        { username: 'johndoe' },
-      );
+      const { userId } = await ServerTestHelper.newUser({ request, app }, { username: 'johndoe' });
       const { id: bookId } = await BooksTableHelper.addBook({
         ownerId: userId,
         title: 'First Book',
@@ -305,6 +410,51 @@ describe('/books endpoint', () => {
       expect(response.statusCode).toEqual(401);
       expect(response.body.isSuccess).toEqual(false);
       expect(response.body.errors.message).toEqual('No token provided');
+    });
+
+    it('should response 404 when book not found', async () => {
+      // Arrange
+      const app = await createServer(container);
+      const { accessToken } = await ServerTestHelper.newUser(
+        { request, app },
+        { username: 'johndoe' },
+      );
+      const bookId = '12345678-abcd-abcd-abcd-123456789012';
+
+      // Action
+      const response = await request(app)
+        .delete(`/books/${bookId}`)
+        .set('Authorization', `Bearer ${accessToken}`);
+
+      // Assert
+      expect(response.statusCode).toEqual(404);
+      expect(response.body.isSuccess).toEqual(false);
+    });
+
+    it('should response 403 when try to delete unaccessible book', async () => {
+      // Arrange
+      const app = await createServer(container);
+      const { userId } = await ServerTestHelper.newUser(
+        { request, app },
+        { username: 'johndoe' },
+      );
+      const { id: bookId } = await BooksTableHelper.addBook({
+        ownerId: userId,
+        title: 'First Book',
+      });
+      const { accessToken } = await ServerTestHelper.newUser(
+        { request, app },
+        { username: 'foo', email: 'foo@journeymail.com' },
+      );
+
+      // Action
+      const response = await request(app)
+        .delete(`/books/${bookId}`)
+        .set('Authorization', `Bearer ${accessToken}`);
+
+      // Assert
+      expect(response.statusCode).toEqual(403);
+      expect(response.body.isSuccess).toEqual(false);
     });
   });
 });

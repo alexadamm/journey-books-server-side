@@ -23,13 +23,13 @@ describe('UpdateBookByIdUseCase', () => {
     const mockBooksValidator = new BooksValidator();
     const mockBooksRepository = new BooksRepository();
 
-    mockBooksValidator.validatePutBookByIdReq = jest.fn()
-      .mockImplementation(() => undefined);
-    mockBooksRepository.getBookById = jest.fn()
+    mockBooksValidator.validatePutBookByIdReq = jest.fn().mockImplementation(() => undefined);
+    mockBooksRepository.getBookById = jest.fn().mockImplementation(() => Promise.resolve());
+    mockBooksRepository.verifyBookAccessbility = jest
+      .fn()
       .mockImplementation(() => Promise.resolve());
-    mockBooksRepository.verifyBookAccessbility = jest.fn()
-      .mockImplementation(() => Promise.resolve());
-    mockBooksRepository.updateBookById = jest.fn()
+    mockBooksRepository.updateBookById = jest
+      .fn()
       .mockImplementation(() => Promise.resolve(expectedUpdatedBook));
 
     const updateBookByIdUseCase = new UpdateBookByIdUseCase({

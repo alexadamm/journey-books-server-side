@@ -13,14 +13,12 @@ describe('DeleteBookByIdUseCase', () => {
     const mockBooksValidator = new BooksValidator();
     const mockBooksRepository = new BooksRepository();
 
-    mockBooksValidator.validateDeleteBookByIdParams = jest.fn()
-      .mockImplementation(() => undefined);
-    mockBooksRepository.getBookById = jest.fn()
+    mockBooksValidator.validateDeleteBookByIdParams = jest.fn().mockImplementation(() => undefined);
+    mockBooksRepository.getBookById = jest.fn().mockImplementation(() => Promise.resolve());
+    mockBooksRepository.verifyBookAccessbility = jest
+      .fn()
       .mockImplementation(() => Promise.resolve());
-    mockBooksRepository.verifyBookAccessbility = jest.fn()
-      .mockImplementation(() => Promise.resolve());
-    mockBooksRepository.deleteBookById = jest.fn()
-      .mockImplementation(() => Promise.resolve());
+    mockBooksRepository.deleteBookById = jest.fn().mockImplementation(() => Promise.resolve());
 
     const deleteBookByIdUseCase = new DeleteBookByIdUseCase({
       booksRepository: mockBooksRepository,

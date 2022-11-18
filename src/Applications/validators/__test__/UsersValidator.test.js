@@ -6,10 +6,10 @@ describe('UsersValidator interface', () => {
     const usersValidator = new UsersValidator();
 
     // Action and Assert
-    expect(usersValidator.validatePostUserPayload).toThrowError(
+    expect(() => usersValidator.validatePostUserPayload({})).toThrowError(
       'USERS_VALIDATOR.METHOD_NOT_IMPLEMENTED',
     );
-    expect(usersValidator.validateGetUserByIdParams).toThrowError(
+    expect(() => usersValidator.validateGetUserByIdParams({})).toThrowError(
       'USERS_VALIDATOR.METHOD_NOT_IMPLEMENTED',
     );
   });

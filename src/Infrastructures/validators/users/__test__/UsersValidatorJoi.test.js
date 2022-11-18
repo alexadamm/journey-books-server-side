@@ -1,5 +1,4 @@
 const Joi = require('joi');
-
 const UsersValidatorJoi = require('../UsersValidatorJoi');
 const InvariantError = require('../../../../Commons/exceptions/InvariantError');
 
@@ -15,7 +14,8 @@ describe('User requests validator', () => {
       const usersValidator = new UsersValidatorJoi(Joi);
 
       // Action and Assert
-      expect(() => usersValidator.validatePostUserPayload(payload)).toThrowError(InvariantError);
+      expect(() => usersValidator.validatePostUserPayload(payload))
+        .toThrowError(InvariantError);
     });
 
     it('should throw error when payload did not meet data type specification', () => {
@@ -30,7 +30,8 @@ describe('User requests validator', () => {
       const usersValidator = new UsersValidatorJoi(Joi);
 
       /// Action and Assert
-      expect(() => usersValidator.validatePostUserPayload(payload)).toThrowError(InvariantError);
+      expect(() => usersValidator.validatePostUserPayload(payload))
+        .toThrowError(InvariantError);
     });
 
     it('should throw error when length of username is more than 50', () => {
@@ -45,7 +46,8 @@ describe('User requests validator', () => {
       const usersValidator = new UsersValidatorJoi(Joi);
 
       // Action and Assert
-      expect(() => usersValidator.validatePostUserPayload(payload)).toThrowError(InvariantError);
+      expect(() => usersValidator.validatePostUserPayload(payload))
+        .toThrowError(InvariantError);
     });
 
     it('should throw error when username contain restricted character', () => {
@@ -60,7 +62,8 @@ describe('User requests validator', () => {
       const usersValidator = new UsersValidatorJoi(Joi);
 
       // Action and Assert
-      expect(() => usersValidator.validatePostUserPayload(payload)).toThrowError(InvariantError);
+      expect(() => usersValidator.validatePostUserPayload(payload))
+        .toThrowError(InvariantError);
     });
 
     it('should throw error when email is not valid', () => {
@@ -75,7 +78,8 @@ describe('User requests validator', () => {
       const usersValidator = new UsersValidatorJoi(Joi);
 
       // Action and Assert
-      expect(() => usersValidator.validatePostUserPayload(payload)).toThrowError(InvariantError);
+      expect(() => usersValidator.validatePostUserPayload(payload))
+        .toThrowError(InvariantError);
     });
 
     it('should not throw error when payload is valid', () => {
@@ -90,9 +94,8 @@ describe('User requests validator', () => {
       const usersValidator = new UsersValidatorJoi(Joi);
 
       // Action and Assert
-      expect(() => usersValidator.validatePostUserPayload(payload)).not.toThrowError(
-        InvariantError,
-      );
+      expect(() => usersValidator.validatePostUserPayload(payload))
+        .not.toThrowError(InvariantError);
     });
   });
 
@@ -106,7 +109,8 @@ describe('User requests validator', () => {
       const usersValidator = new UsersValidatorJoi(Joi);
 
       // Action and Assert
-      expect(() => usersValidator.validateGetUserByIdParams(params)).toThrowError(InvariantError);
+      expect(() => usersValidator.validateGetUserByIdParams(params))
+        .toThrowError(InvariantError);
     });
 
     it('should not throw error when params are valid', () => {
@@ -118,9 +122,8 @@ describe('User requests validator', () => {
       const usersValidator = new UsersValidatorJoi(Joi);
 
       // Action and Assert
-      expect(() => usersValidator.validateGetUserByIdParams(params)).not.toThrowError(
-        InvariantError,
-      );
+      expect(() => usersValidator.validateGetUserByIdParams(params))
+        .not.toThrowError(InvariantError);
     });
   });
 });

@@ -6,7 +6,9 @@ describe('Hasher interface', () => {
     const hasher = new Hasher();
 
     // Action and Assert
-    expect(hasher.hash('plain')).rejects.toThrowError('HASHER.METHOD_NOT_IMPLEMENTED');
+    expect(hasher.hash('plain')).rejects.toThrowError(
+      'HASHER.METHOD_NOT_IMPLEMENTED',
+    );
     expect(hasher.compare('plain', 'encrypted')).rejects.toThrowError(
       'HASHER.METHOD_NOT_IMPLEMENTED',
     );

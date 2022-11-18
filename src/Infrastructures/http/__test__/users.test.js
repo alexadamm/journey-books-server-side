@@ -1,5 +1,4 @@
 const request = require('supertest');
-
 const UsersTableHelper = require('../../../../tests/UsersTableHelper');
 const container = require('../../container');
 const pool = require('../../database/postgres/pool');

@@ -1,5 +1,4 @@
 const Joi = require('joi');
-const BooksValidator = require('../../../../Applications/validators/BooksValidator');
 const InvariantError = require('../../../../Commons/exceptions/InvariantError');
 const BookComponentsValidatorJoi = require('../BookComponentsValidatorJoi');
 
@@ -112,9 +111,8 @@ describe('BookComponentsValidatorJoi', () => {
       const bookComponentsValidator = new BookComponentsValidatorJoi(Joi);
 
       // Action and Assert
-      expect(() => bookComponentsValidator.validateGetBookComponentByIdParams(params)).toThrowError(
-        InvariantError,
-      );
+      expect(() => bookComponentsValidator.validateGetBookComponentByIdParams(params))
+        .toThrowError(InvariantError);
     });
 
     it('should throw InvariantError when params did not meet data type specification', () => {
@@ -127,9 +125,8 @@ describe('BookComponentsValidatorJoi', () => {
       const bookComponentsValidator = new BookComponentsValidatorJoi(Joi);
 
       // Action and Assert
-      expect(() => bookComponentsValidator.validateGetBookComponentByIdParams(params)).toThrowError(
-        InvariantError,
-      );
+      expect(() => bookComponentsValidator.validateGetBookComponentByIdParams(params))
+        .toThrowError(InvariantError);
     });
   });
 
