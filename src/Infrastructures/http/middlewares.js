@@ -14,7 +14,7 @@ class ServerMiddlewares {
     res.status(404).send({
       isSuccess: false,
       status: 'NOT_FOUND',
-      errors: { message: 'Page not found' },
+      errors: ['Page not found'],
     });
   }
 
@@ -29,7 +29,7 @@ class ServerMiddlewares {
     return res.status(500).send({
       isSuccess: false,
       status: 'INTERNAL_SERVER_ERROR',
-      errors: { message: 'an error occured on our server' },
+      errors: ['an error occured on our server'],
     });
   }
 
@@ -40,7 +40,7 @@ class ServerMiddlewares {
     const bearerHeader = req.headers.authorization;
 
     if (typeof bearerHeader === 'undefined') {
-      throw new AuthenticationError({ message: 'No token provided' });
+      throw new AuthenticationError(['No token provided']);
     }
 
     const bearerToken = bearerHeader.split(' ')[1];

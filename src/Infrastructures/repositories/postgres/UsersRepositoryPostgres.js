@@ -14,7 +14,7 @@ class UsersRepositoryPrisma extends UsersRepository {
     const result = await this.pool.User.findUnique({ where: { email }, select: { id: true } });
 
     if (result) {
-      throw new InvariantError({ email: ['Email is already registered'] });
+      throw new InvariantError(['Email is already registered']);
     }
   }
 
@@ -22,7 +22,7 @@ class UsersRepositoryPrisma extends UsersRepository {
     const result = await this.pool.User.findUnique({ where: { username }, select: { id: true } });
 
     if (result) {
-      throw new InvariantError({ username: ['Username is already taken'] });
+      throw new InvariantError(['Username is already taken']);
     }
   }
 
@@ -66,7 +66,7 @@ class UsersRepositoryPrisma extends UsersRepository {
     });
 
     if (!result) {
-      throw new NotFoundError({ id: ['User not found'] });
+      throw new NotFoundError(['User not found']);
     }
 
     return new UserDetail(result);
@@ -79,7 +79,7 @@ class UsersRepositoryPrisma extends UsersRepository {
     });
 
     if (!user) {
-      throw new InvariantError({ username: ['User does not exist'] });
+      throw new InvariantError(['User does not exist']);
     }
 
     return user.id;
@@ -92,9 +92,9 @@ class UsersRepositoryPrisma extends UsersRepository {
     });
 
     if (!user) {
-      throw new AuthenticationError({
-        message: ['Wrong credentials. Invalid username or password'],
-      });
+      throw new AuthenticationError(
+        ['Wrong credentials. Invalid username or password'],
+      );
     }
 
     return user.password;

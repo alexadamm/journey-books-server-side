@@ -30,8 +30,9 @@ describe('HTTP server', () => {
     const response = await request(app).get('/unregisteredRoute');
 
     // Assert
+    const { errors } = response.body;
     expect(response.statusCode).toEqual(404);
-    expect(response.body.errors.message).toEqual('Page not found');
+    expect(errors).toContain('Page not found');
   });
 
   it('should handle server error correctly', async () => {
@@ -41,9 +42,11 @@ describe('HTTP server', () => {
     // Action
     const response = await request(app).post('/users');
 
+    // Assert
+    const { errors } = response.body;
     expect(response.statusCode).toEqual(500);
     expect(response.body.isSuccess).toEqual(false);
-    expect(response.body.errors.message).toEqual('an error occured on our server');
+    expect(errors).toContain('an error occured on our server');
   });
 
   it('should throw AuthenticationError when no token is provided', async () => {
@@ -54,9 +57,10 @@ describe('HTTP server', () => {
     const response = await request(app).post('/books');
 
     // Assert
+    const { errors } = response.body;
     expect(response.statusCode).toEqual(401);
     expect(response.body.isSuccess).toEqual(false);
-    expect(response.body.errors.message).toEqual('No token provided');
+    expect(errors).toContain('No token provided');
   });
 
   it('should not throw AuthenticationError when token is provided', async () => {

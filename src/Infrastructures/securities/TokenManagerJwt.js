@@ -21,7 +21,7 @@ class TokenManagerJwt extends TokenManager {
   async verifyRefreshToken(token) {
     await this.jwt.verify(token, process.env.REFRESH_TOKEN_KEY, (err) => {
       if (err) {
-        throw new InvariantError({ token: ['Invalid token'] });
+        throw new InvariantError(['Invalid token']);
       }
     });
   }
@@ -29,7 +29,7 @@ class TokenManagerJwt extends TokenManager {
   async verifyAccessToken(token) {
     await this.jwt.verify(token, process.env.ACCESS_TOKEN_KEY, (err) => {
       if (err) {
-        throw new AuthenticationError({ token: ['Invalid auth token'] });
+        throw new AuthenticationError(['Invalid auth token']);
       }
     });
   }

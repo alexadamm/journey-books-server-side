@@ -64,9 +64,10 @@ describe('/books/{bookId}/components endpoint', () => {
       const response = await request(app).post(`/books/${bookId}/components`).send(payload);
 
       // Assert
+      const { errors } = response.body;
       expect(response.statusCode).toEqual(401);
       expect(response.body.isSuccess).toEqual(false);
-      expect(response.body.errors.message).toEqual('No token provided');
+      expect(errors).toContain('No token provided');
     });
 
     it('should response 400 when payload not contain needed property', async () => {
@@ -91,11 +92,12 @@ describe('/books/{bookId}/components endpoint', () => {
         .set('Authorization', `Bearer ${accessToken}`);
 
       // Assert
+      const { errors } = response.body;
       expect(response.statusCode).toEqual(400);
       expect(response.body.isSuccess).toEqual(false);
-      expect(response.body.errors.content).toContain('"content" is required');
-      expect(response.body.errors.longitude).toContain('"longitude" is required');
-      expect(response.body.errors.latitude).toContain('"latitude" is required');
+      expect(errors).toContain('"content" is required');
+      expect(errors).toContain('"longitude" is required');
+      expect(errors).toContain('"latitude" is required');
     });
 
     it('should response 400 when payload not meet data type specification', async () => {
@@ -124,11 +126,12 @@ describe('/books/{bookId}/components endpoint', () => {
         .set('Authorization', `Bearer ${accessToken}`);
 
       // Assert
+      const { errors } = response.body;
       expect(response.statusCode).toEqual(400);
       expect(response.body.isSuccess).toEqual(false);
-      expect(response.body.errors.content).toContain('"content" must be a string');
-      expect(response.body.errors.longitude).toContain('"longitude" must be a string');
-      expect(response.body.errors.latitude).toContain('"latitude" must be a string');
+      expect(errors).toContain('"content" must be a string');
+      expect(errors).toContain('"longitude" must be a string');
+      expect(errors).toContain('"latitude" must be a string');
     });
 
     it('should response 404 when book not found', async () => {
@@ -154,8 +157,10 @@ describe('/books/{bookId}/components endpoint', () => {
         .set('Authorization', `Bearer ${accessToken}`);
 
       // Assert
+      const { errors } = response.body;
       expect(response.statusCode).toEqual(404);
       expect(response.body.isSuccess).toEqual(false);
+      expect(errors).toContain('Book not found');
     });
 
     it('should response 403 when try to post to unaccessible book', async () => {
@@ -188,8 +193,10 @@ describe('/books/{bookId}/components endpoint', () => {
         .set('Authorization', `Bearer ${accessToken}`);
 
       // Assert
+      const { errors } = response.body;
       expect(response.statusCode).toEqual(403);
       expect(response.body.isSuccess).toEqual(false);
+      expect(errors).toContain('You have no permission to access this source');
     });
   });
 
@@ -249,9 +256,10 @@ describe('/books/{bookId}/components endpoint', () => {
       const response = await request(app).get(`/books/${bookId}/components/${componentId}`);
 
       // Assert
+      const { errors } = response.body;
       expect(response.statusCode).toEqual(401);
       expect(response.body.isSuccess).toEqual(false);
-      expect(response.body.errors.message).toEqual('No token provided');
+      expect(errors).toContain('No token provided');
     });
 
     it('should response 400 when params not meet data type specification', async () => {
@@ -273,8 +281,11 @@ describe('/books/{bookId}/components endpoint', () => {
         .set('Authorization', `Bearer ${accessToken}`);
 
       // Assert
+      const { errors } = response.body;
       expect(response.statusCode).toEqual(400);
       expect(response.body.isSuccess).toEqual(false);
+      expect(errors).toContain('"bookId" must be a valid GUID');
+      expect(errors).toContain('"componentId" must be a valid GUID');
     });
 
     it('should response 404 when book not found', async () => {
@@ -306,8 +317,10 @@ describe('/books/{bookId}/components endpoint', () => {
         .set('Authorization', `Bearer ${accessToken}`);
 
       // Assert
+      const { errors } = response.body;
       expect(response.statusCode).toEqual(404);
       expect(response.body.isSuccess).toEqual(false);
+      expect(errors).toContain('Book not found');
     });
 
     it('should response 404 when component not found', async () => {
@@ -332,8 +345,10 @@ describe('/books/{bookId}/components endpoint', () => {
         .set('Authorization', `Bearer ${accessToken}`);
 
       // Assert
+      const { errors } = response.body;
       expect(response.statusCode).toEqual(404);
       expect(response.body.isSuccess).toEqual(false);
+      expect(errors).toContain('Book component not found');
     });
 
     it('should response 403 when try to get unaccessible book component', async () => {
@@ -368,8 +383,10 @@ describe('/books/{bookId}/components endpoint', () => {
         .set('Authorization', `Bearer ${accessToken}`);
 
       // Assert
+      const { errors } = response.body;
       expect(response.statusCode).toEqual(403);
       expect(response.body.isSuccess).toEqual(false);
+      expect(errors).toContain('You have no permission to access this source');
     });
   });
 
@@ -444,9 +461,10 @@ describe('/books/{bookId}/components endpoint', () => {
         .send(payload);
 
       // Assert
+      const { errors } = response.body;
       expect(response.statusCode).toEqual(401);
       expect(response.body.isSuccess).toEqual(false);
-      expect(response.body.errors.message).toEqual('No token provided');
+      expect(errors).toContain('No token provided');
     });
 
     it('should response 400 when params not meet data type specification', async () => {
@@ -475,10 +493,11 @@ describe('/books/{bookId}/components endpoint', () => {
         .set('Authorization', `Bearer ${accessToken}`);
 
       // Assert
+      const { errors } = response.body;
       expect(response.statusCode).toEqual(400);
       expect(response.body.isSuccess).toEqual(false);
-      expect(response.body.errors.bookId).toContain('"bookId" must be a valid GUID');
-      expect(response.body.errors.componentId).toContain('"componentId" must be a valid GUID');
+      expect(errors).toContain('"bookId" must be a valid GUID');
+      expect(errors).toContain('"componentId" must be a valid GUID');
     });
 
     it('should response 400 when payload not meet data type specification', async () => {
@@ -507,11 +526,12 @@ describe('/books/{bookId}/components endpoint', () => {
         .set('Authorization', `Bearer ${accessToken}`);
 
       // Assert
+      const { errors } = response.body;
       expect(response.statusCode).toEqual(400);
       expect(response.body.isSuccess).toEqual(false);
-      expect(response.body.errors.content).toContain('"content" must be a string');
-      expect(response.body.errors.longitude).toContain('"longitude" must be a string');
-      expect(response.body.errors.latitude).toContain('"latitude" must be a string');
+      expect(errors).toContain('"content" must be a string');
+      expect(errors).toContain('"longitude" must be a string');
+      expect(errors).toContain('"latitude" must be a string');
     });
   });
 
@@ -570,9 +590,10 @@ describe('/books/{bookId}/components endpoint', () => {
       const response = await request(app).delete(`/books/${bookId}/components/${componentId}`);
 
       // Assert
+      const { errors } = response.body;
       expect(response.statusCode).toEqual(401);
       expect(response.body.isSuccess).toEqual(false);
-      expect(response.body.errors.message).toEqual('No token provided');
+      expect(errors).toContain('No token provided');
     });
 
     it('should response 404 when book not found', async () => {
@@ -604,8 +625,10 @@ describe('/books/{bookId}/components endpoint', () => {
         .set('Authorization', `Bearer ${accessToken}`);
 
       // Assert
+      const { errors } = response.body;
       expect(response.statusCode).toEqual(404);
       expect(response.body.isSuccess).toEqual(false);
+      expect(errors).toContain('Book not found');
     });
 
     it('should response 404 when component not found', async () => {
@@ -630,8 +653,10 @@ describe('/books/{bookId}/components endpoint', () => {
         .set('Authorization', `Bearer ${accessToken}`);
 
       // Assert
+      const { errors } = response.body;
       expect(response.statusCode).toEqual(404);
       expect(response.body.isSuccess).toEqual(false);
+      expect(errors).toContain('Book component not found');
     });
 
     it('should response 403 when try to delete unaccessible book component', async () => {
@@ -666,8 +691,10 @@ describe('/books/{bookId}/components endpoint', () => {
         .set('Authorization', `Bearer ${accessToken}`);
 
       // Assert
+      const { errors } = response.body;
       expect(response.statusCode).toEqual(403);
       expect(response.body.isSuccess).toEqual(false);
+      expect(errors).toContain('You have no permission to access this source');
     });
   });
 });

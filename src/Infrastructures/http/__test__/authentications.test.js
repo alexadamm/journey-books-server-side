@@ -53,10 +53,10 @@ describe('/authentications endpoint', () => {
       const response = await request(app).post('/authentications').send(payload);
 
       // Assert
-      const { message } = response.body.errors;
+      const { errors } = response.body;
       expect(response.statusCode).toEqual(401);
       expect(response.body.isSuccess).toEqual(false);
-      expect(message).toContain('Wrong credentials. Invalid username or password');
+      expect(errors).toContain('Wrong credentials. Invalid username or password');
     });
   });
 
@@ -89,10 +89,10 @@ describe('/authentications endpoint', () => {
       const response = await request(app).put('/authentications').send({});
 
       // Assert
-      const { refreshToken } = response.body.errors;
+      const { errors } = response.body;
       expect(response.statusCode).toEqual(400);
       expect(response.body.isSuccess).toEqual(false);
-      expect(refreshToken).toContain('"refreshToken" is required');
+      expect(errors).toContain('"refreshToken" is required');
     });
 
     it('should response 400 when request payload not meet data type specification', async () => {
@@ -103,10 +103,10 @@ describe('/authentications endpoint', () => {
       const response = await request(app).put('/authentications').send({ refreshToken: 123 });
 
       // Assert
-      const { refreshToken } = response.body.errors;
+      const { errors } = response.body;
       expect(response.statusCode).toEqual(400);
       expect(response.body.isSuccess).toEqual(false);
-      expect(refreshToken).toContain('"refreshToken" must be a string');
+      expect(errors).toContain('"refreshToken" must be a string');
     });
 
     it('should response 400 when refresh token not found', async () => {
@@ -123,10 +123,10 @@ describe('/authentications endpoint', () => {
       const response = await request(app).put('/authentications').send({ refreshToken: token });
 
       // Assert
-      const { refreshToken } = response.body.errors;
+      const { errors } = response.body;
       expect(response.statusCode).toEqual(400);
       expect(response.body.isSuccess).toEqual(false);
-      expect(refreshToken).toContain('Invalid token');
+      expect(errors).toContain('Invalid token');
     });
   });
 
@@ -160,9 +160,10 @@ describe('/authentications endpoint', () => {
       const response = await request(app).delete('/authentications').send({});
 
       // Assert
+      const { errors } = response.body;
       expect(response.statusCode).toEqual(401);
       expect(response.body.isSuccess).toEqual(false);
-      expect(response.body.errors.message).toEqual('No token provided');
+      expect(errors).toContain('No token provided');
     });
 
     it('should response 400 when request payload not contain needed property', async () => {
@@ -181,10 +182,10 @@ describe('/authentications endpoint', () => {
         .set('Authorization', `Bearer ${accessToken}`);
 
       // Assert
-      const { refreshToken } = response.body.errors;
+      const { errors } = response.body;
       expect(response.statusCode).toEqual(400);
       expect(response.body.isSuccess).toEqual(false);
-      expect(refreshToken).toContain('"refreshToken" is required');
+      expect(errors).toContain('"refreshToken" is required');
     });
 
     it('should response 400 when request payload not meet data type specification', async () => {
@@ -203,10 +204,10 @@ describe('/authentications endpoint', () => {
         .set('Authorization', `Bearer ${accessToken}`);
 
       // Assert
-      const { refreshToken } = response.body.errors;
+      const { errors } = response.body;
       expect(response.statusCode).toEqual(400);
       expect(response.body.isSuccess).toEqual(false);
-      expect(refreshToken).toContain('"refreshToken" must be a string');
+      expect(errors).toContain('"refreshToken" must be a string');
     });
 
     it('should response 400 when refresh token not found', async () => {
@@ -226,10 +227,10 @@ describe('/authentications endpoint', () => {
         .set('Authorization', `Bearer ${accessToken}`);
 
       // Assert
-      const { refreshToken } = response.body.errors;
+      const { errors } = response.body;
       expect(response.statusCode).toEqual(400);
       expect(response.body.isSuccess).toEqual(false);
-      expect(refreshToken).toContain('Invalid token');
+      expect(errors).toContain('Invalid token');
     });
   });
 });

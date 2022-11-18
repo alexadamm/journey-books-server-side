@@ -41,7 +41,7 @@ class BooksRepositoryPostgres extends BooksRepository {
     });
 
     if (book.ownerId !== userId) {
-      throw new AuthorizationError({ message: 'You have no permission to access this source' });
+      throw new AuthorizationError(['You have no permission to access this source']);
     }
   }
 
@@ -62,7 +62,7 @@ class BooksRepositoryPostgres extends BooksRepository {
     });
 
     if (!book) {
-      throw new NotFoundError('Book not found');
+      throw new NotFoundError(['Book not found']);
     }
 
     return new BookDetail({

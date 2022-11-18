@@ -16,7 +16,7 @@ class HasherArgon extends Hasher {
     const result = await this.argon2.verify(encrypted, plain, { salt: this.salt });
 
     if (!result) {
-      throw new AuthenticationError('Wrong credentials. Invalid username or password');
+      throw new AuthenticationError(['Wrong credentials. Invalid username or password']);
     }
   }
 }

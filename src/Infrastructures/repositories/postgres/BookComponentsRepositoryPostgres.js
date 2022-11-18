@@ -22,7 +22,7 @@ class BookComponentsRepositoryPostgres extends BookComponentsRepository {
     });
 
     if (!bookComponent) {
-      throw new NotFoundError('Book component not found');
+      throw new NotFoundError(['Book component not found']);
     }
 
     return new BookComponentDetail(bookComponent);

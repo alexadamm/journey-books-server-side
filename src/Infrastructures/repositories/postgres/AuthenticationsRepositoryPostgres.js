@@ -14,7 +14,7 @@ class AuthenticationsRepositoryPostgres extends AuthenticationsRepository {
   async checkTokenAvailability(token) {
     const result = await this.pool.Authentication.findUnique({ where: { token } });
     if (!result) {
-      throw new InvariantError({ refreshToken: ['Invalid token'] });
+      throw new InvariantError(['Invalid token']);
     }
   }
 
