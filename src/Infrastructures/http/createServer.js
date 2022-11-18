@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const { default: helmet } = require('helmet');
 
 const users = require('../../Interfaces/http/api/users/routes');
@@ -13,6 +14,7 @@ const createServer = async (container) => {
 
   const middlewares = new ServerMiddlewares(container);
 
+  app.use(cors());
   app.use(express.json());
   app.use(helmet());
   app.use(express.urlencoded({ extended: true }));
