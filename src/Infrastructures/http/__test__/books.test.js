@@ -30,7 +30,7 @@ describe('/books endpoint', () => {
 
       // AssertBook
       const {
-        id, title, owner, createdAt,
+        id, title, owner, createdAt, components,
       } = response.body.data.addedBook;
       expect(response.statusCode).toEqual(201);
       expect(response.body.isSuccess).toEqual(true);
@@ -39,6 +39,7 @@ describe('/books endpoint', () => {
       expect(title).toEqual(payload.title);
       expect(owner).toEqual('johndoe');
       expect(createdAt).toBeDefined();
+      expect(components).toEqual([]);
     });
 
     it('should throw 401 when auth token not provided', async () => {

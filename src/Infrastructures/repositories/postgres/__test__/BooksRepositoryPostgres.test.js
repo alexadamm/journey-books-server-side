@@ -54,10 +54,13 @@ describe('BooksRepositoryPostgres', () => {
       const addedBook = await booksRepository.addBook(newBook);
 
       // Assert
+      expect(addedBook).toBeDefined();
+      expect(addedBook).toBeInstanceOf(BookDetail);
       expect(addedBook.id).toBeDefined();
       expect(addedBook.owner).toEqual('johndoe');
       expect(addedBook.title).toEqual(newBook.title);
       expect(addedBook.createdAt).toBeDefined();
+      expect(addedBook.components).toEqual([]);
     });
   });
 
@@ -139,6 +142,11 @@ describe('BooksRepositoryPostgres', () => {
       // Assert
       expect(book).toBeDefined();
       expect(book).toBeInstanceOf(BookDetail);
+      expect(book.id).toEqual(id);
+      expect(book.owner).toEqual('johndoe');
+      expect(book.title).toEqual('First Journey');
+      expect(book.createdAt).toBeDefined();
+      expect(book.components).toEqual([]);
     });
   });
 
@@ -157,7 +165,11 @@ describe('BooksRepositoryPostgres', () => {
       // Assert
       expect(updatedBook).toBeDefined();
       expect(updatedBook).toBeInstanceOf(BookDetail);
+      expect(updatedBook.id).toEqual(id);
+      expect(updatedBook.owner).toEqual('johndoe');
       expect(updatedBook.title).toBe(bookUpdate.title);
+      expect(updatedBook.createdAt).toBeDefined();
+      expect(updatedBook.components).toEqual([]);
     });
   });
 

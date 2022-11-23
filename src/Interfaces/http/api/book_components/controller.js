@@ -48,12 +48,12 @@ class BookComponentsController {
       auth: { userId },
     } = req;
     const updateBookComponentUseCase = this.container.getInstance(UpdateBookComponentUseCase.name);
-    const component = await updateBookComponentUseCase.execute(req.params, req.body, userId);
+    const updatedComponent = await updateBookComponentUseCase.execute(req.params, req.body, userId);
 
     res.status(200).json({
       isSuccess: true,
       message: 'Component updated successfully',
-      data: { component },
+      data: { updatedComponent },
     });
   }
 

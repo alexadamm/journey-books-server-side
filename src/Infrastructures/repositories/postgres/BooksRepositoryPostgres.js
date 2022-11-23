@@ -16,10 +16,20 @@ class BooksRepositoryPostgres extends BooksRepository {
         owner: {
           select: { username: true },
         },
+        bookComponents: {
+          select: {
+            id: true,
+            content: true,
+          },
+        },
       },
     });
 
-    return new BookDetail({ ...book, owner: book.owner.username });
+    return new BookDetail({
+      ...book,
+      owner: book.owner.username,
+      components: book.bookComponents,
+    });
   }
 
   async getBooksByUserId(userId) {
@@ -80,10 +90,20 @@ class BooksRepositoryPostgres extends BooksRepository {
         owner: {
           select: { username: true },
         },
+        bookComponents: {
+          select: {
+            id: true,
+            content: true,
+          },
+        },
       },
     });
 
-    return new BookDetail({ ...book, owner: book.owner.username });
+    return new BookDetail({
+      ...book,
+      owner: book.owner.username,
+      components: book.bookComponents,
+    });
   }
 
   async deleteBookById(bookId) {

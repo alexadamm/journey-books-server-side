@@ -428,7 +428,7 @@ describe('/books/{bookId}/components endpoint', () => {
       expect(response.statusCode).toEqual(200);
       expect(response.body.isSuccess).toEqual(true);
       expect(response.body.message).toEqual('Component updated successfully');
-      expect(response.body.data.component.content).toEqual('Lorem ipsum dolor sit amet');
+      expect(response.body.data.updatedComponent.content).toEqual('Lorem ipsum dolor sit amet');
     });
 
     it('should response 401 when auth token not provided', async () => {
