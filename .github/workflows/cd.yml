@@ -22,5 +22,5 @@ jobs:
             cd ~/projects/journey-book-server-side
             git pull origin main
             npm install
-            npm run db:migrate:deploy
+            npm run db:migrate:prod
             pm2 restart journey-api
